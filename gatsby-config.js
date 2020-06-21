@@ -10,8 +10,11 @@ module.exports = {
       resolve: `gatsby-plugin-create-client-paths`,
       options: { prefixes: [`/app/*`] },
     },
+    `gatsby-plugin-material-ui`,
+    `gatsby-plugin-nprogress`,
     {
       resolve: `gatsby-plugin-manifest`,
+      
       options: {
         name: `gatsby-starter-typescript-pwa`,
         short_name: `starter`,

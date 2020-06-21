@@ -1,13 +1,17 @@
 {
-  "name": "gatsby-typescript-pwa-starter",
+  "name": "anapred",
   "private": true,
   "description": "A simple starter to bootstrap a TypeScript React PWA App with gatsby",
   "version": "0.1.0",
   "author": "Meridja Nassim <ha_meridja@esi.dz>",
   "dependencies": {
+    "@material-ui/core": "^4.10.2",
+    "@material-ui/icons": "^4.9.1",
     "gatsby": "^2.23.3",
     "gatsby-plugin-create-client-paths": "^2.3.4",
     "gatsby-plugin-manifest": "^2.4.11",
+    "gatsby-plugin-material-ui": "^2.1.9",
+    "gatsby-plugin-nprogress": "^2.3.4",
     "gatsby-plugin-offline": "^3.2.9",
     "gatsby-plugin-react-helmet": "^3.3.4",
     "prop-types": "^15.7.2",

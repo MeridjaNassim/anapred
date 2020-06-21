@@ -1,14 +1,15 @@
 import React, { ReactElement } from 'react'
-import {Link} from 'gatsby'
+import {Link} from '@reach/router'
+import Layout from '../../components/layout/layout'
 interface Props {
     path : string
 }
 
 export default function Profile({}: Props): ReactElement {
     return (
-        <div>
+        <Layout>
             Profile Page
-            <Link to="/app/home">Go back to home page</Link>
-        </div>
+            <Link to="/">Go back to home page</Link>
+        </Layout>
     )
 }
