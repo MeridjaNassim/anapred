@@ -14,12 +14,14 @@
     "gatsby-plugin-nprogress": "^2.3.4",
     "gatsby-plugin-offline": "^3.2.9",
     "gatsby-plugin-react-helmet": "^3.3.4",
+    "gatsby-theme-firebase": "^1.0.10",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-helmet": "^6.1.0"
   },
   "devDependencies": {
+    "dotenv": "^8.2.0",
     "prettier": "2.0.5"
   },
   "keywords": [
