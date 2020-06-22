@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,7 +12,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
+import firebase from 'gatsby-plugin-firebase'
+import {StyledFirebaseAuth} from 'react-firebaseui';
+import { navigate } from 'gatsby';
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -48,12 +50,30 @@ const useStyles = makeStyles((theme) => ({
 
 
 interface Props {
-  path : string,
-  
-}
-export default function SignIn({} : Props) {
-  const classes = useStyles();
+  path: string,
 
+}
+
+const FirebaseUiConfig = {
+  signInFlow: 'popup',
+  // We will display Google and Facebook as auth providers.
+  signInOptions: [
+    firebase.auth.EmailAuthProvider.PROVIDER_ID,
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+    firebase.auth.FacebookAuthProvider.PROVIDER_ID
+  ],
+  callbacks: {
+    // Avoid redirects after sign-in.
+    signInSuccessWithAuthResult: () => false
+  }
+}
+export default function Welcome({} : Props) {
+
+  const classes = useStyles();
+  const [credentials,setCredentials] = useState<{email : string , password : string}>({
+    email : '',
+    password : ''
+  })
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -75,6 +95,9 @@ export default function SignIn({} : Props) {
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={e =>{
+              setCredentials({...credentials , [e.target.name] : e.target.value})
+            }}
           />
           <TextField
             variant="outlined"
@@ -86,6 +109,9 @@ export default function SignIn({} : Props) {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={e =>{
+              setCredentials({...credentials , [e.target.name] : e.target.value})
+            }}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -97,6 +123,16 @@ export default function SignIn({} : Props) {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={()=>{
+              console.log(credentials)
+              firebase.auth().signInWithEmailAndPassword(credentials.email,credentials.password)
+                .then(user => {
+                  console.log(user)
+                  navigate('/app/profile')
+                })
+                .catch(err => console.log(err))
+
+            }}
           >
             Sign In
           </Button>

@@ -17,7 +17,7 @@ module.exports = {
     `gatsby-plugin-material-ui`,
     `gatsby-plugin-nprogress`,
     {
-      resolve: "gatsby-theme-firebase",
+      resolve: "gatsby-plugin-firebase",
       options: {
         credentials: {
           apiKey: process.env.FIREBASE_API_KEY,
@@ -29,9 +29,7 @@ module.exports = {
           appId: process.env.FIREBASE_APP_ID,
           measurementId: process.env.FIREBASE_MEASURMENT_ID
         },
-        loginPath: "/app",
-        loginRedirectPath: "/app/profile",
-        socialLogins: ["google", "twitter", "facebook", "github"],
+        
       },
     }
     ,

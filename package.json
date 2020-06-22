@@ -7,17 +7,20 @@
   "dependencies": {
     "@material-ui/core": "^4.10.2",
     "@material-ui/icons": "^4.9.1",
+    "firebase": "^7.15.3",
     "gatsby": "^2.23.3",
     "gatsby-plugin-create-client-paths": "^2.3.4",
+    "gatsby-plugin-firebase": "^0.2.0-beta.4",
     "gatsby-plugin-manifest": "^2.4.11",
     "gatsby-plugin-material-ui": "^2.1.9",
     "gatsby-plugin-nprogress": "^2.3.4",
     "gatsby-plugin-offline": "^3.2.9",
     "gatsby-plugin-react-helmet": "^3.3.4",
-    "gatsby-theme-firebase": "^1.0.10",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-firebase-hooks": "^2.2.0",
+    "react-firebaseui": "^4.1.0",
     "react-helmet": "^6.1.0"
   },
   "devDependencies": {
