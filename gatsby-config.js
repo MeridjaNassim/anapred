@@ -1,7 +1,6 @@
 const config= require('dotenv').config({
   path : `.env.${process.env.NODE_ENV}`
 })
-
 module.exports = {
   siteMetadata: {
     title: `Gatsby TypeScript PWA`,
@@ -15,7 +14,15 @@ module.exports = {
       options: { prefixes: [`/app/*`] },
     },
     `gatsby-plugin-material-ui`,
-    `gatsby-plugin-nprogress`,
+    {
+      resolve: `gatsby-plugin-nprogress`,
+      options: {
+        // Setting a color is optional.
+        color: `#212121`,
+        // Disable the loading spinner.
+        showSpinner: true,
+      },
+    },
     {
       resolve: "gatsby-plugin-firebase",
       options: {

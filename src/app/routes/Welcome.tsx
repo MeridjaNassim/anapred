@@ -12,9 +12,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import firebase from 'gatsby-plugin-firebase'
-import {StyledFirebaseAuth} from 'react-firebaseui';
 import { navigate } from 'gatsby';
+import { useEmailPasswordCredentials, useFirebaseAuth } from '../hooks/auth.hook';
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -54,26 +53,31 @@ interface Props {
 
 }
 
-const FirebaseUiConfig = {
-  signInFlow: 'popup',
-  // We will display Google and Facebook as auth providers.
-  signInOptions: [
-    firebase.auth.EmailAuthProvider.PROVIDER_ID,
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-    firebase.auth.FacebookAuthProvider.PROVIDER_ID
-  ],
-  callbacks: {
-    // Avoid redirects after sign-in.
-    signInSuccessWithAuthResult: () => false
-  }
-}
+// const FirebaseUiConfig = {
+//   signInFlow: 'popup',
+//   // We will display Google and Facebook as auth providers.
+//   signInOptions: [
+//     firebase.auth.EmailAuthProvider.PROVIDER_ID,
+//     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+//     firebase.auth.FacebookAuthProvider.PROVIDER_ID
+//   ],
+//   callbacks: {
+//     // Avoid redirects after sign-in.
+//     signInSuccessWithAuthResult: () => false
+//   }
+// }
 export default function Welcome({} : Props) {
 
   const classes = useStyles();
-  const [credentials,setCredentials] = useState<{email : string , password : string}>({
-    email : '',
-    password : ''
-  })
+  const {credentials , setEmail , setPassword} = useEmailPasswordCredentials();
+  const {signInWithEmailAndPassword} = useFirebaseAuth();
+
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    console.log(credentials)
+    await signInWithEmailAndPassword(credentials);
+    navigate('/app/profile')
+  }
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -96,7 +100,7 @@ export default function Welcome({} : Props) {
             autoComplete="email"
             autoFocus
             onChange={e =>{
-              setCredentials({...credentials , [e.target.name] : e.target.value})
+              setEmail(e.target.value)
             }}
           />
           <TextField
@@ -110,7 +114,7 @@ export default function Welcome({} : Props) {
             id="password"
             autoComplete="current-password"
             onChange={e =>{
-              setCredentials({...credentials , [e.target.name] : e.target.value})
+              setPassword(e.target.value)
             }}
           />
           <FormControlLabel
@@ -123,16 +127,7 @@ export default function Welcome({} : Props) {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={()=>{
-              console.log(credentials)
-              firebase.auth().signInWithEmailAndPassword(credentials.email,credentials.password)
-                .then(user => {
-                  console.log(user)
-                  navigate('/app/profile')
-                })
-                .catch(err => console.log(err))
-
-            }}
+            onClick={handleSignIn}
           >
             Sign In
           </Button>
