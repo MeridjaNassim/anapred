@@ -2,7 +2,7 @@ import { useAuthState } from "react-firebase-hooks/auth"
 import firebase from "gatsby-plugin-firebase"
 import { useState } from "react"
 
-export const useFirebaseAuthState = ()=> useAuthState(firebase.auth());
+export const useFirebaseAuthState = () : [firebase.User,boolean,firebase.auth.Error] => useAuthState(firebase.auth());
 export const useFirebaseAuth = () => {
   const signInWithEmailAndPassword = async (
     credentials: EmailAndPasswordCredentials

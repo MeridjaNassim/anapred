@@ -5,11 +5,15 @@ import { Avatar } from '@material-ui/core'
 import { Search } from '@material-ui/icons'
 import avatar from '../../images/profile.jpeg';
 import { navigate } from 'gatsby';
+import { useFirebaseAuthState, useFirebaseAuth } from '../../hooks/auth.hook';
 interface Props {
     path : string
 }
 
 const AnaPredLayout = ({ children ,path}: PropsWithChildren<Props>) => {
+
+    const [user,loading,error] = useFirebaseAuthState();
+    const {logout} =useFirebaseAuth();
     return (
         <div className={styles.layout}>
             <CssBaseline></CssBaseline>
@@ -26,12 +30,16 @@ const AnaPredLayout = ({ children ,path}: PropsWithChildren<Props>) => {
                 </div>
                 <div id={styles.optionsContainer} className={`${styles.box1} ${styles.hright}`}>
                     <div id={styles.user}>
-                    <Avatar src={avatar}></Avatar>
-                    <h4 id={styles.username}>John Doe</h4>
+                    <Avatar src={loading ? null : user.photoURL}>{loading ? "U" :null}</Avatar>
+                        <h4 id={styles.username}>{loading ? "loading...":user.displayName}</h4>
                     </div>
                     
                     <div className={styles.options}>
-                    <button className={styles.funcButton}title="see notifications" ><img  src={require('./icons/notification.svg')} alt="notif"  /></button>
+                    <button onClick={async e=> {
+                        e.preventDefault();
+                        await logout()
+                        navigate('/app/welcome')
+                    }} className={styles.funcButton}title="see notifications" ><img  src={require('./icons/notification.svg')} alt="notif"  /></button>
                     <button className={styles.funcButton} title="logout"><img  src={require('./icons/logout.svg')} alt="logout"  /></button>
                     
                     </div>
