@@ -5,6 +5,8 @@
     --font: 'Poppins', sans-serif;
     --light-grey : rgba(128, 128, 128, 0.5);
     --font-montserrat :'Montserrat', sans-serif;
+    --blue : #1174EF;
+    --light-blue : #11CBEF;
 }
 .layout {
     font-family: var(--font) ;
@@ -26,7 +28,13 @@
     left: 0;
     border-right:solid rgba(128, 128, 128, 0.1);
     border-left-width: thin;
+    box-shadow: 0px 3px 2px #00000029;
 
+}
+.activeOnglet {
+   
+    border-left: 3px solid var(--blue);
+    font-weight: bold;
 }
 .main {
     height: 90vh;
@@ -76,6 +84,11 @@
 .divider {
     opacity: 0.2;
     width: 100%;
+}
+
+#routeName {
+    text-transform: uppercase;
+    color: var(--blue);
 }
 .search {
     display:flex;

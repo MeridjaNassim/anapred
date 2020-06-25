@@ -4,6 +4,10 @@ import { useState } from "react"
 
 export const useFirebaseAuthState = () : [firebase.User,boolean,firebase.auth.Error] => useAuthState(firebase.auth());
 export const useFirebaseAuth = () => {
+
+  const registerWithEmailAndPassword = async ()=>{
+    
+  }
   const signInWithEmailAndPassword = async (
     credentials: EmailAndPasswordCredentials
   ) => {

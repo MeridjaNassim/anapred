@@ -76,7 +76,7 @@ export default function Welcome({} : Props) {
     e.preventDefault();
     console.log(credentials)
     await signInWithEmailAndPassword(credentials);
-    navigate('/app/profile')
+    navigate('/app/home/dashboard')
   }
   return (
     <Container component="main" maxWidth="xs">
