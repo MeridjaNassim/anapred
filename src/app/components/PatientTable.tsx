@@ -17,16 +17,17 @@ const useStyles = makeStyles({
     maxHeight: 440,
   },
   header : {
-      backgroundColor : 'rgba(200,200,200,0.1)',
+      backgroundColor : 'rgba(245,245,245,1) ',
       color :'var(--light-blue)',
       fontFamily: "var(--font)",
       fontWeight : "lighter"
   },
   cell : {
       color : 'inherit',
-      backgroundColor : 'inherit',
+      backgroundColor : 'rgba(245,245,245,1)',
       fontFamily: "inherit",
-      fontWeight : "inherit"
+      fontWeight : "inherit",
+      padding : "20px"
   }
 });
 
@@ -42,12 +43,13 @@ export interface PatientData {
 }
 export interface TableProps {
     style : React.CSSProperties,
+    paginationStyle : React.CSSProperties
     data : {
         columns :Column[]
         rows : PatientData[]
     }
 }
-export default function StickyHeadTable({style,data} : TableProps) {
+export default function StickyHeadTable({style,paginationStyle,data} : TableProps) {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -63,7 +65,7 @@ export default function StickyHeadTable({style,data} : TableProps) {
 
   return (
       <>
-      <TableContainer style={{style}} className={classes.container}>
+      <TableContainer style={style} className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead className={classes.header}>
             <TableRow>
@@ -98,6 +100,7 @@ export default function StickyHeadTable({style,data} : TableProps) {
         </Table>
       </TableContainer>
       <TablePagination
+        style={paginationStyle}
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
         count={data.rows.length}

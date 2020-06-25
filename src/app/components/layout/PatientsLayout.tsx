@@ -2,6 +2,9 @@ import React, { PropsWithChildren, useState } from 'react'
 import styles from '../../styles/patientLayout.module.css';
 import PatientTable, { PatientData , Column, TableProps } from '../PatientTable';
 import { Typography } from '@material-ui/core';
+import Button from '../Button';
+import AddIcon from '@material-ui/icons/Add';
+import { navigate } from 'gatsby';
 interface Props {
 
 }
@@ -29,7 +32,7 @@ const patientData : AllPatientData[] =[
         phone :"0672439370",
         age : 40,
         etat : "Critique",
-        date_insc : "2020-04-12",
+        date_insc : (new Date()).toUTCString(),
         categorie : "Pandémie"
     },
     {
@@ -38,7 +41,70 @@ const patientData : AllPatientData[] =[
         phone :"0672439370",
         age : 40,
         etat : "Critique",
-        date_insc : "2020-04-12",
+        date_insc : (new Date()).toUTCString(),
+        categorie : "Pandémie"
+    },
+    {
+        uid : "2",
+        fullName : "Abdellkader boualem",
+        phone :"0672439370",
+        age : 40,
+        etat : "Critique",
+        date_insc : (new Date()).toUTCString(),
+        categorie : "Pandémie"
+    },
+    {
+        uid : "2",
+        fullName : "Abdellkader boualem",
+        phone :"0672439370",
+        age : 40,
+        etat : "Critique",
+        date_insc : (new Date()).toUTCString(),
+        categorie : "Pandémie"
+    },
+    {
+        uid : "2",
+        fullName : "Abdellkader boualem",
+        phone :"0672439370",
+        age : 40,
+        etat : "Critique",
+        date_insc : (new Date()).toUTCString(),
+        categorie : "Pandémie"
+    },
+    {
+        uid : "2",
+        fullName : "Abdellkader boualem",
+        phone :"0672439370",
+        age : 40,
+        etat : "Critique",
+        date_insc : (new Date()).toUTCString(),
+        categorie : "Pandémie"
+    },
+    {
+        uid : "2",
+        fullName : "Abdellkader boualem",
+        phone :"0672439370",
+        age : 40,
+        etat : "Critique",
+        date_insc : (new Date()).toUTCString(),
+        categorie : "Pandémie"
+    },
+    {
+        uid : "2",
+        fullName : "Abdellkader boualem",
+        phone :"0672439370",
+        age : 40,
+        etat : "Critique",
+        date_insc : (new Date()).toUTCString(),
+        categorie : "Pandémie"
+    },
+    {
+        uid : "2",
+        fullName : "Abdellkader boualem",
+        phone :"0672439370",
+        age : 40,
+        etat : "Critique",
+        date_insc : (new Date()).toUTCString(),
         categorie : "Pandémie"
     }
 ]
@@ -106,11 +172,22 @@ const PatientsLayout = (props: PropsWithChildren<Props>) => {
                 }} variant="h6" gutterBottom>
                     List des patients
                 </Typography>
-
+                <Button text="Ajouter patient" 
+                onClick ={e=> {
+                    e.preventDefault();
+                    navigate('/app/home/Patients/ajout')
+                }}
+                style={{
+                    color : "var(--light-blue)",
+                    borderColor :"var(--light-blue)"
+                }} color="default" variant="outlined" size="medium" icon={<AddIcon></AddIcon>} />
                 </div>
                 
-                <PatientTable style={{
-                    marginTop : "50px"
+                <PatientTable paginationStyle={{
+                    padding : "20px"
+                }} style={{
+                    marginTop : "50px",
+                    paddingBottom : "50px",
                 }} data={allPatients.data}></PatientTable>
             </section>
         </div>

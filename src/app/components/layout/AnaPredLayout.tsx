@@ -90,7 +90,7 @@ const AnaPredLayout = ({ children ,path}: PropsWithChildren<Props>) => {
                 <p style={{ marginTop: 'auto' }}>Version 0.1.0</p>
             </aside>
             <main className={styles.main}>
-                <div style={{ position: "fixed", zIndex : -1, background: "linear-gradient(260deg, rgba(17,116,239,1) 0%, rgba(17,205,239,1) 100%)", width: "100%", height: "33%" }}>
+                <div style={{ position: "absolute", zIndex : -1, background: "linear-gradient(260deg, rgba(17,116,239,1) 0%, rgba(17,205,239,1) 100%)", width: "85%", height: "33%" }}>
 
                 </div>
                 {children}
