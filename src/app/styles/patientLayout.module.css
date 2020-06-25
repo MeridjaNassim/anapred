@@ -38,5 +38,10 @@
     border-radius: 50px;
     box-shadow: 0px 3px 6px #00000029;
     background-color: #fafafa;
-    padding: 40px;
+}
+
+.contentHeader {
+    margin: 0;
+    padding: 50px 5vw;
+    box-sizing: content-box;
 }

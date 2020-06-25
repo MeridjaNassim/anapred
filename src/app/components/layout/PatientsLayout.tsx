@@ -13,16 +13,70 @@ const Route = ({id , title , isActive , onClick})=> {
 </li>
 }
 
+interface AllPatientData extends PatientData {
+    fullName : string,
+    age : number,
+    etat : string,
+    phone : string,
+    date_insc : string,
+    categorie : string
+}
 
+const patientData : AllPatientData[] =[
+    {
+        uid : "1",
+        fullName : "Abdellkader boualem",
+        phone :"0672439370",
+        age : 40,
+        etat : "Critique",
+        date_insc : "2020-04-12",
+        categorie : "Pandémie"
+    },
+    {
+        uid : "2",
+        fullName : "Abdellkader boualem",
+        phone :"0672439370",
+        age : 40,
+        etat : "Critique",
+        date_insc : "2020-04-12",
+        categorie : "Pandémie"
+    }
+]
 
 const allPatients :TableProps = {
     data : {
         columns : [
-           
+           {
+               id : "fullName",
+               label :"Nom complet du patient",
+               align : 'center'
+           },
+           {
+               id : "age",
+               label :"Age",
+               align : 'center'
+           },
+           {
+            id : "etat",
+            label :"Etat",
+            align : 'center'
+            },{
+                id : "phone",
+                label :"Numero de telephone",
+                align : 'center'
+            },
+            {
+                id : "date_insc",
+                label :"Date Inscription",
+                align : 'center'
+            },
+            {
+                id : "categorie",
+                label :"Catégorie maladie",
+                align : 'center'
+            }
         ],
-        rows : [
-
-        ]
+        rows : patientData
     }
 }
 const PatientsLayout = (props: PropsWithChildren<Props>) => {
@@ -43,14 +97,21 @@ const PatientsLayout = (props: PropsWithChildren<Props>) => {
                 </ul>
             </nav>
             <section className={styles.contentArea}>
+
+                <div className={styles.contentHeader}>
                 <Typography style={{
                     color  : 'var(--light-blue)',
+                    marginBottom : "20px"
                     
-                }} variant="display1" gutterBottom>
+                }} variant="h6" gutterBottom>
                     List des patients
                 </Typography>
 
-                <PatientTable data={allPatients.data}></PatientTable>
+                </div>
+                
+                <PatientTable style={{
+                    marginTop : "50px"
+                }} data={allPatients.data}></PatientTable>
             </section>
         </div>
     )
