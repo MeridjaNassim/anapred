@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useContext } from 'react'
+import React, { PropsWithChildren, useContext, useEffect } from 'react'
 import styles from '../../styles/layout.module.css'
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Avatar } from '@material-ui/core'
@@ -29,7 +29,6 @@ const AnaPredLayout = ({ children ,path}: PropsWithChildren<Props>) => {
     const {selectedOnglet,setSelectedOnglet} = useContext(OngletContext)
     const [user,loading,error] = useFirebaseAuthState();
     const {logout} =useFirebaseAuth();
-
     const handleSelectOnglet = (e : React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         setSelectedOnglet(e.target.id);
         navigate('/app/home/'+e.target.id)

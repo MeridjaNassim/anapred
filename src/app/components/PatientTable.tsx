@@ -28,6 +28,14 @@ const useStyles = makeStyles({
       fontFamily: "inherit",
       fontWeight : "inherit",
       padding : "20px"
+  },
+  icon : {
+      color : 'var(--light-blue)'
+  },
+  root : {
+      background : 'linear-gradient(260deg, rgb(17, 116, 239) 0%, rgb(17, 205, 239) 100%)',
+      color :'white',
+      borderRadius : '0px 0px 40px 40px'
   }
 });
 
@@ -43,13 +51,11 @@ export interface PatientData {
 }
 export interface TableProps {
     style : React.CSSProperties,
-    paginationStyle : React.CSSProperties
-    data : {
-        columns :Column[]
-        rows : PatientData[]
-    }
+    paginationStyle : React.CSSProperties,
+    columns : Column[],
+    data :  PatientData[],
 }
-export default function StickyHeadTable({style,paginationStyle,data} : TableProps) {
+export default function StickyHeadTable({style,paginationStyle,columns,data} : TableProps) {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -59,7 +65,7 @@ export default function StickyHeadTable({style,paginationStyle,data} : TableProp
   };
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(+event.target.value);
+    setRowsPerPage(Number.parseInt(event.target.value));
     setPage(0);
   };
 
@@ -69,7 +75,7 @@ export default function StickyHeadTable({style,paginationStyle,data} : TableProp
         <Table stickyHeader aria-label="sticky table">
           <TableHead className={classes.header}>
             <TableRow>
-              {data.columns.map((column) => (
+              {columns.map((column) => (
                 <TableCell
                     className={classes.cell}
                   key={column.id}
@@ -82,10 +88,10 @@ export default function StickyHeadTable({style,paginationStyle,data} : TableProp
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+            {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
               return (
                 <TableRow hover role="checkbox" tabIndex={-1} key={row.uid}>
-                  {data.columns.map((column) => {
+                  {columns.map((column) => {
                     const value = row[column.id];
                     return (
                       <TableCell key={column.id} align={column.align}>
@@ -101,11 +107,15 @@ export default function StickyHeadTable({style,paginationStyle,data} : TableProp
       </TableContainer>
       <TablePagination
         style={paginationStyle}
-        rowsPerPageOptions={[10, 25, 100]}
+        rowsPerPageOptions={[5,10, 25, 100]}
         component="div"
-        count={data.rows.length}
+        count={data.length}
         rowsPerPage={rowsPerPage}
         page={page}
+        classes={{
+            selectIcon : classes.icon,
+            root : classes.root
+        }}
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
