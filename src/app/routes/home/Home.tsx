@@ -9,7 +9,9 @@ const Home = (props: PropsWithChildren<Props>) => {
     const href = window.location.href.split("/")
     const path = href[href.length-1];
     return (
+        <SideBarProvider>
         <OngletProvider>
+         
         <AppLayout path={path}>
             <section style={{
                 padding: '0 2%'
@@ -19,6 +21,7 @@ const Home = (props: PropsWithChildren<Props>) => {
             
         </AppLayout>
         </OngletProvider>
+        </SideBarProvider>
     )
 }
 
