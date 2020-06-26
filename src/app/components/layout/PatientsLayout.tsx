@@ -41,8 +41,7 @@ const PatientsLayout = (props: PropsWithChildren<Props>) => {
 
                 <div className={styles.contentHeader}>
                 <Typography style={{
-                    color  : 'var(--light-blue)',
-                    marginBottom : "20px"
+                    color  : 'var(--light-blue)'
                     
                 }} variant="h6" gutterBottom>
                     List des patients
@@ -54,6 +53,7 @@ const PatientsLayout = (props: PropsWithChildren<Props>) => {
                 }}
                 style={{
                     color : "white",
+                    borderRadius : "50px",
                     background :"rgb(17, 116, 239)"
                 }} color="default" variant="contained" size="medium" icon={<AddIcon></AddIcon>} />
                 </div>

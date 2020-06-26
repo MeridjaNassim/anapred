@@ -43,6 +43,7 @@
 .contentHeader {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin: 0;
     padding: 50px 5vw;
     box-sizing: content-box;

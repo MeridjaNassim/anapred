@@ -4,7 +4,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { Avatar } from '@material-ui/core'
 import { Search } from '@material-ui/icons'
 import avatar from '../../images/profile.jpeg';
-import { navigate } from 'gatsby';
+import { navigate, Link } from 'gatsby';
 import { useFirebaseAuthState, useFirebaseAuth } from '../../hooks/auth.hook';
 import OngletContext from '../../state/OngletContext';
 import SideBarContext from '../../state/SideBarContext';
@@ -22,24 +22,22 @@ interface FuncProps {
     showText?:boolean,
 }
 const Func : React.FC<FuncProps> = ({icon,id,isActive,showContent,onClick,showText} )=> {
-    return  <div id={id} className={`${styles.func} ${isActive(id) ? styles.activeOnglet : null } `} onClick={onClick} title={!showText && id}>
-    <img src={icon} alt={id} className={styles.icon} />
-    <span id="text" className={`${showContent ? styles.showContent : null}`} >
-        {showText && id}
-    </span>
-    
-</div>
+    return <Link to={`/app/home/${id}`} className={styles.func} activeClassName={styles.activeOnglet} title={!showText && id}>
+         <img src={icon} alt={id} className={styles.icon} />
+        <span id="text" className={`${showContent ? styles.showContent : null}`} >
+            {showText && id}
+        </span>
+    </Link>
 }
 
 const AnaPredLayout = ({ children ,path}: PropsWithChildren<Props>) => {
     const {selectedOnglet,setSelectedOnglet} = useContext(OngletContext)
     const {sidebarOpen,toggleSidebar} = useContext(SideBarContext)
     const [user,loading,error] = useFirebaseAuthState();
-    const matches = useMediaQuery('(max-width:900px)');
+    const matches = useMediaQuery('(max-width:1200px)');
     const {logout} =useFirebaseAuth();
     const handleSelectOnglet = (e : React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         setSelectedOnglet(e.target.id);
-        navigate('/app/home/'+e.target.id)
     }
     const isOngletActive = (onglet : string) => {
         return selectedOnglet === onglet
@@ -76,7 +74,13 @@ const AnaPredLayout = ({ children ,path}: PropsWithChildren<Props>) => {
                 </div>
             </header>
             <aside className={`${styles.sidebar} ${sidebarOpen ? styles.sidebarOpen : null} ${styles.showOnHover}`}>
-                <div className={styles.brand} onClick={e => toggleSidebar()}>
+                <div className={styles.brand} onClick={e => {
+                    e.preventDefault()
+                    if(!matches) {
+                        /// its not mobile 
+                        toggleSidebar()
+                    }
+                }}>
                     <h1 id={styles.title} style={{
                         fontSize : `${sidebarOpen ? "1.5rem" : "0.75rem"}`
                     }}><span style={{ color: 'var(--light-blue)' }}>ANA</span><span style={{ color: 'var(--blue)' }}>PRED</span></h1>

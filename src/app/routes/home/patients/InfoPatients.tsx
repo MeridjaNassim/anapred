@@ -1,6 +1,6 @@
 import React, { PropsWithChildren, useState } from 'react'
 import PatientLayout from '../../../components/layout/PatientsLayout'
-import { TableProps, PatientData } from '../../../components/PatientTable'
+import { TableProps } from '../../../components/PatientTable'
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Fade from '@material-ui/core/Fade';
 import Paper from '@material-ui/core/Paper';
@@ -8,6 +8,7 @@ import Popper, { PopperPlacementType } from '@material-ui/core/Popper';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { IconButton, Typography } from '@material-ui/core';
 import PatientTable from '../../../components/PatientTable'
+import {PatientData} from '../../../interfaces/patient'
 interface Props {
     path : string
 }
