@@ -1,6 +1,6 @@
 import React,{useState, PropsWithChildren, useEffect} from "react"
 import {PatientData} from '../../interfaces/patient'
-import { usePatientRawData } from "../../hooks/database.hook"
+import { useMockPatientRawData } from "../../hooks/database.hook"
 
 interface PatientState {
 
@@ -24,7 +24,7 @@ export default PatientContext
 export const PatientProvider : React.FC= (props :PropsWithChildren<ProviderProps>)=>{
 
     const [data,setData]= useState<PatientData[]>([]);
-    const {data : rawData ,loading,error} = usePatientRawData()
+    const {data : rawData ,loading,error} = useMockPatientRawData()
     useEffect(() => {
         if(!loading) {
            setData(rawData.map(({uid ,data}) => {
