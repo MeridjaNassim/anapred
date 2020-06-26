@@ -3,13 +3,13 @@
 :root{
     --sidebar-width-closed : 5%;
     --sidebar-width-open : 15%;
-    --header-width : calc(100% - --sidebar-width-closed);
+    --header-width : 95%;
     --font: 'Poppins', sans-serif;
     --light-grey : rgba(128, 128, 128, 0.5);
     --font-montserrat :'Montserrat', sans-serif;
     --blue : #1174EF;
     --light-blue : #11CBEF;
-    --main-sidebar-open-width : calc(100% - --sidebar-width-open);
+    --main-sidebar-open-width : 85%;
 }
 .layout {
     font-family: var(--font) ;
@@ -177,6 +177,7 @@
     margin-left: 2%;
 }
 .options {
+    flex: 1;
     margin-left: auto;
     display: flex;
     justify-content:flex-end !important;
@@ -219,7 +220,19 @@
     background-color: rgba(128, 128, 128, 0.2);
 }
 
+.gradientDiv {
+    height: 33%;
+    overflow-x: hidden;
+    position: absolute;
+    z-index: -1;
+    background: linear-gradient(260deg, rgba(17,116,239,1) 0%, rgba(17,205,239,1) 100%);
+    width: 95% ;
+}
+
 @media screen and (max-width: 1200px) {
+    .gradientDiv {
+        width: 85%;
+    }
     .sidebar {
         width : 15%;
     }
@@ -240,8 +253,10 @@
    .header{
        margin-left:  15%;
    }
-   .options {
-       width : 25%
+   .optionsContainer {
+       flex: 2;
+       margin: 0;
+       margin-left: 2vw;
    }
    .funcButton {
     padding : 2px 2px;

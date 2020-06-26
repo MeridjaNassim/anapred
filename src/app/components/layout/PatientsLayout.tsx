@@ -41,7 +41,7 @@ const PatientsLayout = (props: PropsWithChildren<Props>) => {
 
                 <div className={styles.contentHeader}>
                 <Typography style={{
-                    color  : 'var(--light-blue)'
+                    color  : 'var(--blue)'
                     
                 }} variant="h6" gutterBottom>
                     List des patients
@@ -52,10 +52,11 @@ const PatientsLayout = (props: PropsWithChildren<Props>) => {
                     navigate('/app/home/Patients/ajout')
                 }}
                 style={{
-                    color : "white",
+                    color : "var(--blue)",
                     borderRadius : "50px",
-                    background :"rgb(17, 116, 239)"
-                }} color="default" variant="contained" size="medium" icon={<AddIcon></AddIcon>} />
+                    padding :"20px",
+                    border : "2px solid var(--blue)"
+                }} color="default" variant="outlined" size="medium" icon={<AddIcon></AddIcon>} />
                 </div>
                 
                 {props.children}

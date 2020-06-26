@@ -102,7 +102,9 @@ const AnaPredLayout = ({ children ,path}: PropsWithChildren<Props>) => {
                 <p style={{ marginTop: 'auto' }}>Version 0.1.0</p>
             </aside>
             <main className={`${styles.main} ${sidebarOpen ? styles.mainSideBarOpen : null}`}>
-                <div style={{ overflowX : "hidden", position: "absolute", zIndex : -1, background: "linear-gradient(260deg, rgba(17,116,239,1) 0%, rgba(17,205,239,1) 100%)", width: `${sidebarOpen ? "85%" : "95%"}`, height: "33%" }}>
+                <div className={styles.gradientDiv} style={{
+                    width : `${sidebarOpen ? "85%" : "95%"}`
+                }}>
 
                 </div>
                 {children}
