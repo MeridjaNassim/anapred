@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useState } from 'react'
+import React, { PropsWithChildren, useState, useContext } from 'react'
 import PatientLayout from '../../../components/layout/PatientsLayout'
 import { TableProps } from '../../../components/PatientTable'
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -9,6 +9,7 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { IconButton, Typography } from '@material-ui/core';
 import PatientTable from '../../../components/PatientTable'
 import {PatientData} from '../../../interfaces/patient'
+import PatientContext from '../../../state/patients/PatientContext';
 interface Props {
     path : string
 }
@@ -26,89 +27,89 @@ interface AllPatientData extends PatientData {
  * This data should be fetched from firebase and then converted to this format
  * TODO: DELETE when you implement firebase firestore data
  */
-const patientData : AllPatientData[] =[
-    {
-        uid : "1",
-        fullName : "Abdellkader boualem",
-        phone :"0672439370",
-        age : 40,
-        etat : "Bon",
-        date_insc : (new Date()).toUTCString(),
-        categorie : "Pandémie"
-    },
-    {
-        uid : "2",
-        fullName : "Abdellkader boualem",
-        phone :"0672439370",
-        age : 40,
-        etat : "Normal",
-        date_insc : (new Date()).toUTCString(),
-        categorie : "Pandémie"
-    },
-    {
-        uid : "3",
-        fullName : "Abdellkader boualem",
-        phone :"0672439370",
-        age : 40,
-        etat : "Critique",
-        date_insc : (new Date()).toUTCString(),
-        categorie : "Pandémie"
-    },
-    {
-        uid : "4",
-        fullName : "Abdellkader boualem",
-        phone :"0672439370",
-        age : 40,
-        etat : "Urgent",
-        date_insc : (new Date()).toUTCString(),
-        categorie : "Pandémie"
-    },
-    {
-        uid : "5",
-        fullName : "Abdellkader boualem",
-        phone :"0672439370",
-        age : 40,
-        etat : "Critique",
-        date_insc : (new Date()).toUTCString(),
-        categorie : "Pandémie"
-    },
-    {
-        uid : "6",
-        fullName : "Abdellkader boualem",
-        phone :"0672439370",
-        age : 40,
-        etat : "Bon",
-        date_insc : (new Date()).toUTCString(),
-        categorie : "Pandémie"
-    },
-    {
-        uid : "7",
-        fullName : "Abdellkader boualem",
-        phone :"0672439370",
-        age : 40,
-        etat : "Urgent",
-        date_insc : (new Date()).toUTCString(),
-        categorie : "Pandémie"
-    },
-    {
-        uid : "8",
-        fullName : "Abdellkader boualem",
-        phone :"0672439370",
-        age : 40,
-        etat : "Bon",
-        date_insc : (new Date()).toUTCString(),
-        categorie : "Pandémie"
-    },
-    {
-        uid : "9",
-        fullName : "Abdellkader boualem",
-        phone :"0672439370",
-        age : 40,
-        etat : "Bon",
-        date_insc : (new Date()).toUTCString(),
-        categorie : "Pandémie"
-    }
-]
+// const patientData : AllPatientData[] =[
+//     {
+//         uid : "1",
+//         fullName : "Abdellkader boualem",
+//         phone :"0672439370",
+//         age : 40,
+//         etat : "Bon",
+//         date_insc : (new Date()).toUTCString(),
+//         categorie : "Pandémie"
+//     },
+//     {
+//         uid : "2",
+//         fullName : "Abdellkader boualem",
+//         phone :"0672439370",
+//         age : 40,
+//         etat : "Normal",
+//         date_insc : (new Date()).toUTCString(),
+//         categorie : "Pandémie"
+//     },
+//     {
+//         uid : "3",
+//         fullName : "Abdellkader boualem",
+//         phone :"0672439370",
+//         age : 40,
+//         etat : "Critique",
+//         date_insc : (new Date()).toUTCString(),
+//         categorie : "Pandémie"
+//     },
+//     {
+//         uid : "4",
+//         fullName : "Abdellkader boualem",
+//         phone :"0672439370",
+//         age : 40,
+//         etat : "Urgent",
+//         date_insc : (new Date()).toUTCString(),
+//         categorie : "Pandémie"
+//     },
+//     {
+//         uid : "5",
+//         fullName : "Abdellkader boualem",
+//         phone :"0672439370",
+//         age : 40,
+//         etat : "Critique",
+//         date_insc : (new Date()).toUTCString(),
+//         categorie : "Pandémie"
+//     },
+//     {
+//         uid : "6",
+//         fullName : "Abdellkader boualem",
+//         phone :"0672439370",
+//         age : 40,
+//         etat : "Bon",
+//         date_insc : (new Date()).toUTCString(),
+//         categorie : "Pandémie"
+//     },
+//     {
+//         uid : "7",
+//         fullName : "Abdellkader boualem",
+//         phone :"0672439370",
+//         age : 40,
+//         etat : "Urgent",
+//         date_insc : (new Date()).toUTCString(),
+//         categorie : "Pandémie"
+//     },
+//     {
+//         uid : "8",
+//         fullName : "Abdellkader boualem",
+//         phone :"0672439370",
+//         age : 40,
+//         etat : "Bon",
+//         date_insc : (new Date()).toUTCString(),
+//         categorie : "Pandémie"
+//     },
+//     {
+//         uid : "9",
+//         fullName : "Abdellkader boualem",
+//         phone :"0672439370",
+//         age : 40,
+//         etat : "Bon",
+//         date_insc : (new Date()).toUTCString(),
+//         categorie : "Pandémie"
+//     }
+// ]
 const EtatPatient : React.FC<{etat: Etat}>= ({etat})=> {
     const getSpanColor = (etat : Etat)=> {
         switch(etat){
@@ -178,6 +179,7 @@ const Options : React.FC<{patient : PatientData}> = ({patient}) => {
 }
 const InfoPatients = (props: Props) => {
     const renderData = (data : AllPatientData[]) : PatientData[] => {
+        console.log("rendering data : ",data)
         return data.map((d) => {
            return {
             ...d,
@@ -186,9 +188,10 @@ const InfoPatients = (props: Props) => {
            }
         })
     }
+    const {data,loading,error} = useContext(PatientContext)
     return (
         <PatientLayout>
-            <PatientTable paginationStyle={allPatients.paginationStyle} style={allPatients.style} columns={allPatients.columns} data={renderData(allPatients.data as AllPatientData[])}></PatientTable>
+            <PatientTable paginationStyle={allPatients.paginationStyle} style={allPatients.style} columns={allPatients.columns} data={renderData(data as AllPatientData[])}></PatientTable>
         </PatientLayout>
     )
 }
@@ -242,5 +245,5 @@ const allPatients :TableProps = {
              align :"center"
          }
      ],
-    data :patientData
+    data :[]
 }

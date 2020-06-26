@@ -1,6 +1,6 @@
-import React,{useState, PropsWithChildren} from "react"
+import React,{useState, PropsWithChildren, useEffect} from "react"
 import {PatientData} from '../../interfaces/patient'
-import { usePatientData } from "../../hooks/database.hook"
+import { usePatientRawData } from "../../hooks/database.hook"
 
 interface PatientState {
 
@@ -15,16 +15,30 @@ const initialState :PatientState = {
 }
 
 
-const SideBarContext = React.createContext(initialState)
+const PatientContext = React.createContext(initialState)
 
 interface ProviderProps {
 
 }
-export default SideBarContext
-export const SideBarProvider : React.FC= (props :PropsWithChildren<ProviderProps>)=>{
+export default PatientContext
+export const PatientProvider : React.FC= (props :PropsWithChildren<ProviderProps>)=>{
 
-    const {data,loading,error} = usePatientData()
-    return <SideBarContext.Provider
+    const [data,setData]= useState<PatientData[]>([]);
+    const {data : rawData ,loading,error} = usePatientRawData()
+    useEffect(() => {
+        if(!loading) {
+           setData(rawData.map(({uid ,data}) => {
+               return {
+                   uid ,
+                    ...data,
+                date_insc : (new Date(data.date_insc.seconds)).toUTCString()
+               }
+           }));
+        }else {
+           setData([])
+        }
+    }, [loading])
+    return <PatientContext.Provider
             value={
               {
                data ,
@@ -34,5 +48,5 @@ export const SideBarProvider : React.FC= (props :PropsWithChildren<ProviderProps
             }
         >
             {props.children}
-    </SideBarContext.Provider>
+    </PatientContext.Provider>
 }

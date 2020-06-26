@@ -7,7 +7,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-
+import {PatientData} from '../interfaces/patient'
 const useStyles = makeStyles({
   root: {
     width: '100%',
@@ -37,9 +37,7 @@ export interface Column {
     align?: 'center';
     format?: (value: number) => string;
 }
-export interface PatientData {
-    uid : string
-}
+
 export interface TableProps {
     style : React.CSSProperties,
     paginationStyle : React.CSSProperties,
