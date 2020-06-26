@@ -1,6 +1,5 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -18,7 +17,7 @@ const useStyles = makeStyles({
   },
   header : {
       backgroundColor : 'rgba(245,245,245,1) ',
-      color :'var(--light-blue)',
+      color :'var(--blue)',
       fontFamily: "var(--font)",
       fontWeight : "lighter"
   },
@@ -28,14 +27,6 @@ const useStyles = makeStyles({
       fontFamily: "inherit",
       fontWeight : "inherit",
       padding : "20px"
-  },
-  icon : {
-      color : 'var(--light-blue)'
-  },
-  root : {
-      background : 'linear-gradient(260deg, rgb(17, 116, 239) 0%, rgb(17, 205, 239) 100%)',
-      color :'white',
-      borderRadius : '0px 0px 40px 40px'
   }
 });
 
@@ -112,10 +103,6 @@ export default function StickyHeadTable({style,paginationStyle,columns,data} : T
         count={data.length}
         rowsPerPage={rowsPerPage}
         page={page}
-        classes={{
-            selectIcon : classes.icon,
-            root : classes.root
-        }}
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />

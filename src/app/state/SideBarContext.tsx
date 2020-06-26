@@ -1,4 +1,4 @@
-import React,{useState} from "react"
+import React,{useState, PropsWithChildren} from "react"
 
 
 interface SideBarState {
@@ -6,11 +6,13 @@ interface SideBarState {
   sidebarOpen : boolean ,
   openSidebar : () => void,
   closeSidebar : ()=> void,
+  toggleSidebar : ()=> void,
 }
 const initialState :SideBarState = {
   sidebarOpen :false ,
   openSidebar : ()=>{},
   closeSidebar :()=>{},
+  toggleSidebar :()=>{}
 }
 
 
@@ -24,12 +26,14 @@ export const SideBarProvider : React.FC= (props :PropsWithChildren<ProviderProps
     const [sidebarOpen , setSidebarOpen] = useState(false)
     const openSidebar = ()=> setSidebarOpen(true)
     const closeSidebar = ()=> setSidebarOpen(false)
+    const toggleSidebar = ()=> setSidebarOpen(!sidebarOpen)
     return <SideBarContext.Provider
             value={
               {
                 sidebarOpen,
                 openSidebar,
-                closeSidebar
+                closeSidebar,
+                toggleSidebar
               }
             }
         >

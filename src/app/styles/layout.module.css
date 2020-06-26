@@ -1,12 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;900&display=swap');
 :root{
-    --sidebar-width : 15%;
+    --sidebar-width-closed : 5%;
+    --sidebar-width-open : 15%;
+    --header-width : calc(100% - --sidebar-width-closed);
     --font: 'Poppins', sans-serif;
     --light-grey : rgba(128, 128, 128, 0.5);
     --font-montserrat :'Montserrat', sans-serif;
     --blue : #1174EF;
     --light-blue : #11CBEF;
+    --main-sidebar-open-width : calc(100% - --sidebar-width-open);
 }
 .layout {
     font-family: var(--font) ;
@@ -14,22 +17,36 @@
 }
 
 .sidebar {
-    width: var(--sidebar-width);
+    width: var(--sidebar-width-closed);
+    content: "";
     min-height: 100vh;
     background-color: #fafafa;
     display: flex;
     overflow-y: auto;
     overflow-x: hidden;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    position: absolute;
+    position: fixed;
+    padding-right: 0;
     top: 0;
     left: 0;
+    z-index: 10;
     border-right:solid rgba(128, 128, 128, 0.1);
     border-left-width: thin;
     box-shadow: 0px 3px 2px #00000029;
+    transition: width 0.5s ease;
+}
+.sidebar:hover {
+    width: var(--sidebar-width-open);
+}
 
+.sidebarOpen {
+    width: var(--sidebar-width-open);
+}
+.mainSideBarOpen {
+    width : var(--main-sidebar-open-width) !important;
+    margin-left : var(--sidebar-width-open) !important;
 }
 .activeOnglet {
    
@@ -38,17 +55,20 @@
 }
 .main {
     height: 90vh;
-    margin-left : var(--sidebar-width);
+    margin-left : var( --sidebar-width-closed );
 }
 .header {
-    margin-left : var(--sidebar-width);
+    margin-left : var( --sidebar-width-closed );
     height: 10vh;
-    width : 85%;
+    width : var(--header-width);
     background-color: #fafafa;
     display: flex;
     align-items: center;
 }
-
+.headerSideBarOpen {
+    margin-left : var(--sidebar-width-open);
+    width : var(--main-sidebar-open-width);
+}
 .hleft {
     justify-content: flex-start;
     margin-left: 2% ;
@@ -128,7 +148,8 @@
     align-items: center;
     width: 100%;
     box-sizing: border-box;
-    padding :10%;
+    align-self: center;
+    padding :20px;
     cursor: pointer;
     transition: background-color 0.5s ease;
 }
@@ -147,7 +168,7 @@
     width: 60%;
 }
 #username {
-    margin-left: 20px;
+    margin-left: 2%;
 }
 .options {
     margin-left: auto;
@@ -158,10 +179,24 @@
 
 .icon {
     width: 20px;
-    margin: 0;
-    margin-right: 20%;  
+    margin: 0  10px;
 }
 
+.showOnHover [id=text] {
+    
+    width: 0;
+    transition: 0.5s ease;
+    opacity: 0;
+}
+.showOnHover:hover [id=text]{
+    width: auto;
+    transition: 0.5s ease;
+    opacity: 1;
+}
+.showContent {
+    width: auto !important;
+    opacity: 1 !important;
+}
 .funcButton {
     background-color: transparent;
     border: none;
@@ -176,4 +211,49 @@
 }
 .funcButton:hover {
     background-color: rgba(128, 128, 128, 0.2);
+}
+
+@media screen and (max-width: 900px) {
+    .sidebar {
+        width : 15%;
+    }
+    .sidebarOpen {
+        width: 25%;
+    }
+    .func {
+        padding :10px 5px;
+        font-size: small;
+    }
+   .icon {
+    width: 15px;
+    margin: 0  auto;
+   }
+   .main {
+    margin-left : 15%;
+   }
+   .header{
+       margin-left:  15%;
+   }
+   .options {
+       width : 25%
+   }
+   .funcButton {
+    padding : 2px 2px;
+   }
+   #user {
+         margin-right:  15%;
+       flex-direction: column;
+   }
+   #user h4 {
+    margin : 4px 0;
+   }
+   #routeName {
+       flex: 0.5;
+   }
+   #searchbar {
+       flex : 2 !important;
+   }
+   .search{
+    padding : 0;
+   }
 }

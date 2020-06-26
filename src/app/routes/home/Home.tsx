@@ -1,6 +1,7 @@
 import React, { PropsWithChildren } from 'react'
 import AppLayout from '../../components/layout/AnaPredLayout'
 import {OngletProvider} from '../../state/OngletContext'
+import { SideBarProvider } from '../../state/SideBarContext'
 interface Props {
     path : string
 }

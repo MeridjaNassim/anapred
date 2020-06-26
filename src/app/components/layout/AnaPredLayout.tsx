@@ -7,6 +7,8 @@ import avatar from '../../images/profile.jpeg';
 import { navigate } from 'gatsby';
 import { useFirebaseAuthState, useFirebaseAuth } from '../../hooks/auth.hook';
 import OngletContext from '../../state/OngletContext';
+import SideBarContext from '../../state/SideBarContext';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 interface Props {
     path : string
 }
@@ -14,20 +16,26 @@ interface Props {
 interface FuncProps {
     icon : any,
     id : string,
+    showContent ?:boolean,
     isActive : (onglet : string) => boolean,
     onClick :  (e : React.MouseEvent<HTMLDivElement, MouseEvent>) => void,
-
+    showText?:boolean,
 }
-const Func : React.FC<FuncProps> = ({icon,id,isActive,onClick} )=> {
-    return  <div id={id} className={`${styles.func} ${isActive(id) ? styles.activeOnglet : null }`} onClick={onClick}>
+const Func : React.FC<FuncProps> = ({icon,id,isActive,showContent,onClick,showText} )=> {
+    return  <div id={id} className={`${styles.func} ${isActive(id) ? styles.activeOnglet : null } `} onClick={onClick} title={!showText && id}>
     <img src={icon} alt={id} className={styles.icon} />
-    {id}
+    <span id="text" className={`${showContent ? styles.showContent : null}`} >
+        {showText && id}
+    </span>
+    
 </div>
 }
 
 const AnaPredLayout = ({ children ,path}: PropsWithChildren<Props>) => {
     const {selectedOnglet,setSelectedOnglet} = useContext(OngletContext)
+    const {sidebarOpen,toggleSidebar} = useContext(SideBarContext)
     const [user,loading,error] = useFirebaseAuthState();
+    const matches = useMediaQuery('(max-width:900px)');
     const {logout} =useFirebaseAuth();
     const handleSelectOnglet = (e : React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         setSelectedOnglet(e.target.id);
@@ -39,11 +47,11 @@ const AnaPredLayout = ({ children ,path}: PropsWithChildren<Props>) => {
     return (
         <div className={styles.layout}>
             <CssBaseline></CssBaseline>
-            <header className={styles.header}>
+            <header className={`${styles.header} ${sidebarOpen ? styles.headerSideBarOpen : null}`}>
                 <div id={styles.routeName} className={`${styles.box1} ${styles.hleft} `}>
                     {path}
              </div>
-                <div id="searchbar" className={`${styles.box1} ${styles.hcenter}`}>
+                <div id={styles.searchbar} className={`${styles.box1} ${styles.hcenter}`}>
                     <form className={styles.search}>
                         <button className={styles.funcButton} type="submit" title="submit search"><Search id={styles.searchIcon}></Search></button>
                         
@@ -67,29 +75,30 @@ const AnaPredLayout = ({ children ,path}: PropsWithChildren<Props>) => {
                     </div>
                 </div>
             </header>
-            <aside className={styles.sidebar}>
-                <div className={styles.brand}>
-                    <h1 id={styles.title}><span style={{ color: 'var(--light-blue)' }}>ANA</span><span style={{ color: 'var(--blue)' }}>PRED</span></h1>
+            <aside className={`${styles.sidebar} ${sidebarOpen ? styles.sidebarOpen : null} ${styles.showOnHover}`}>
+                <div className={styles.brand} onClick={e => toggleSidebar()}>
+                    <h1 id={styles.title} style={{
+                        fontSize : `${sidebarOpen ? "1.5rem" : "0.75rem"}`
+                    }}><span style={{ color: 'var(--light-blue)' }}>ANA</span><span style={{ color: 'var(--blue)' }}>PRED</span></h1>
                 </div>
                 <div className={styles.funcs}>
-                    <Func id="Dashboard" isActive={isOngletActive} onClick={handleSelectOnglet} icon={require('./icons/dashboard.svg')}></Func>
-                    <Func id="Patients" isActive={isOngletActive} onClick={handleSelectOnglet} icon={require('./icons/patient.svg')}></Func>
-                    <Func id="Interventions" isActive={isOngletActive} onClick={handleSelectOnglet} icon={require('./icons/intervention.svg')}></Func>
-                </div>
-                <hr className={styles.divider}></hr>
-                <div className={styles.funcs}>
-                    <Func id="Statistiques" isActive={isOngletActive} onClick={handleSelectOnglet} icon={require('./icons/stats.svg')}></Func>
-                    <Func id="Predictions" isActive={isOngletActive} onClick={handleSelectOnglet} icon={require('./icons/prediction.svg')}></Func>
+                    <Func id="Dashboard" showContent={sidebarOpen} showText={!matches} isActive={isOngletActive} onClick={handleSelectOnglet} icon={require('./icons/dashboard.svg')} />
+                    <Func id="Patients" showContent={sidebarOpen } showText={!matches} isActive={isOngletActive} onClick={handleSelectOnglet} icon={require('./icons/patient.svg')} />
+                    <Func id="Interventions" showContent={sidebarOpen } showText={!matches} isActive={isOngletActive} onClick={handleSelectOnglet} icon={require('./icons/intervention.svg')} />
                 </div>
                 <hr className={styles.divider}></hr>
                 <div className={styles.funcs}>
-                    <Func id="Parametres" isActive={isOngletActive} onClick={handleSelectOnglet} icon={require('./icons/settings.svg')}></Func>
-                    <Func id="Documentations" isActive={isOngletActive} onClick={handleSelectOnglet} icon={require('./icons/docs.svg')}></Func>
+                    <Func id="Statistiques" showContent={sidebarOpen } showText={!matches} isActive={isOngletActive} onClick={handleSelectOnglet} icon={require('./icons/stats.svg')} />                   <Func id="Predictions" showContent={sidebarOpen }showText={!matches} isActive={isOngletActive} onClick={handleSelectOnglet} icon={require('./icons/prediction.svg')} />
+                </div>
+                <hr className={styles.divider}></hr>
+                <div className={styles.funcs}>
+                    <Func id="Parametres" showContent={sidebarOpen } showText={!matches} isActive={isOngletActive} onClick={handleSelectOnglet} icon={require('./icons/settings.svg')} />
+                    <Func id="Documentations" showContent={sidebarOpen} showText={!matches} isActive={isOngletActive} onClick={handleSelectOnglet} icon={require('./icons/docs.svg')} />
                 </div>
                 <p style={{ marginTop: 'auto' }}>Version 0.1.0</p>
             </aside>
-            <main className={styles.main}>
-                <div style={{ position: "absolute", zIndex : -1, background: "linear-gradient(260deg, rgba(17,116,239,1) 0%, rgba(17,205,239,1) 100%)", width: "85%", height: "33%" }}>
+            <main className={`${styles.main} ${sidebarOpen ? styles.mainSideBarOpen : null}`}>
+                <div style={{ overflowX : "hidden", position: "absolute", zIndex : -1, background: "linear-gradient(260deg, rgba(17,116,239,1) 0%, rgba(17,205,239,1) 100%)", width: `${sidebarOpen ? "85%" : "95%"}`, height: "33%" }}>
 
                 </div>
                 {children}
