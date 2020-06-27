@@ -1,33 +1,51 @@
-import React, { PropsWithChildren, useState, useRef } from 'react'
+import React, { PropsWithChildren, useState, useRef, useContext, useLayoutEffect } from 'react'
 import styles from '../../styles/patientLayout.module.css';
-import PatientTable, { PatientData , Column, TableProps } from '../PatientTable';
+
 import { Typography, IconButton } from '@material-ui/core';
 import Button from '../Button';
 import AddIcon from '@material-ui/icons/Add';
-
+import Fade from '@material-ui/core/Fade/Fade'
 import { navigate } from 'gatsby';
+import PatientContext from '../../state/patients/PatientContext';
+
 interface Props {
 
 }
 
 
 
-const Route = ({id , title , isActive , onClick})=> {
-    return  <li id={`${id}`} className={`${styles.navitem} ${isActive(id) ? styles.active : null}`} onClick={onClick}>
-    {title}
-</li>
+const Route = ({ id, title, isActive, onClick }) => {
+    return <li id={`${id}`} className={`${styles.navitem} ${isActive(id) ? styles.active : null}`} onClick={onClick}>
+        {title}
+    </li>
 }
 
+const titles = {
+    "Tout": "Liste de tout les patients",
+    "Pandemie": "Liste des patients de la pandémie",
+    "Normal": "Liste des patients normals"
+}
 
 const PatientsLayout = (props: PropsWithChildren<Props>) => {
     const [activeRoute, setActiveRoute] = useState("Tout");
-    const isActive = (id : string )=> {
+    const isActive = (id: string) => {
         return activeRoute === id
     }
-    const handleClickOnRoute = (e : React.MouseEvent<HTMLLIElement,MouseEvent>)=> {
+    const handleClickOnRoute = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
         setActiveRoute(e.target.id)
     }
+    const { data, displayedData, setDisplayedData } = useContext(PatientContext);
+    useLayoutEffect(() => {
+        console.log("Filtering data ", activeRoute)
+        if (activeRoute === "Tout") {
+            console.log("Data : ", data);
+            return setDisplayedData(data);
+        } else if (activeRoute === "Normal") {
+            return setDisplayedData(data.filter(item => item?.categorie !== "Pandemie"))
+        }
+        return setDisplayedData(data.filter(item => item?.categorie === activeRoute))
 
+    }, [activeRoute])
     return (
         <div className={styles.layout}>
             <nav className={styles.navbar}>
@@ -40,26 +58,29 @@ const PatientsLayout = (props: PropsWithChildren<Props>) => {
             <section className={styles.contentArea}>
 
                 <div className={styles.contentHeader}>
-                <Typography style={{
-                    color  : 'var(--blue)'
-                    
-                }} variant="h6" gutterBottom>
-                    List des patients
-                </Typography>
-                <Button text="Ajouter patient" 
-                onClick ={e=> {
-                    e.preventDefault();
-                    navigate('/app/home/Patients/ajout')
-                }}
-                style={{
-                    color : "var(--blue)",
-                    borderRadius : "50px",
-                    padding :"20px",
-                    border : "2px solid var(--blue)"
-                }} color="default" variant="outlined" size="medium" icon={<AddIcon></AddIcon>} />
+                    <Typography style={{
+                        color: 'var(--blue)'
+
+                    }} variant="h6" gutterBottom>
+                        {titles[activeRoute] + " : " + displayedData.length}
+                    </Typography>
+                    <Button text="Ajouter patient"
+                        onClick={e => {
+                            e.preventDefault();
+                            navigate('/app/home/Patients/ajout')
+                        }}
+                        style={{
+                            color: "var(--blue)",
+                            borderRadius: "50px",
+                            padding: "20px",
+                            border: "2px solid var(--blue)"
+                        }} color="default" variant="outlined" size="medium" icon={<AddIcon></AddIcon>} />
                 </div>
-                
-                {props.children}
+                <Fade timeout={600} appear={true} in={true}>
+                    <>
+                        {props.children}
+                    </>
+                </Fade>
             </section>
         </div>
     )

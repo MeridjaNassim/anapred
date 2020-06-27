@@ -15,7 +15,10 @@
     font-family: var(--font) ;
    box-sizing: content-box;
 }
-
+.connectionState {
+    margin-top:auto ;
+    
+}
 .sidebar {
     width: var(--sidebar-width-closed);
     content: "";

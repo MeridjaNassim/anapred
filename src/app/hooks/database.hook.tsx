@@ -15,9 +15,6 @@ export const usePatientRawData = ()=> {
         }
     );
     /// when loading of data is complete or error occured do this .
-    useEffect(()=> {
-        console.log(value?.docs.map(doc => doc.data()))
-    },[value])
     return {data : value?.docs.map(doc => {
         return {
             uid : doc?.id,
@@ -70,6 +67,58 @@ export const useMockPatientRawData =  ()=> {
                     seconds : 1500000
                 }
             }
-        }
+        },
+        {
+            uid : "In352FDOEUsOhdtrIzqa",
+            data : {
+                fullName :"Zegour Abdelkader",
+                phone :"XXXXXXXX",
+                etat : "Urgent" ,
+                age :100,
+                categorie : "Pandemie",
+                date_insc : {
+                    seconds : 1500000
+                }
+            }
+        },
+        {
+            uid : "In352HDOEUsQhdtrIzqg",
+            data : {
+                fullName :"Meridja Nassim",
+                phone :"0672439370",
+                etat : "Bon" ,
+                age :20,
+                categorie : "Gripe",
+                date_insc : {
+                    seconds : 1500000
+                }
+            }
+        },
+        {
+            uid : "In352HDOEFAFhdtrIzqg",
+            data : {
+                fullName :"Meridja Nassim",
+                phone :"0672439370",
+                etat : "Bon" ,
+                age :20,
+                categorie : "Gripe",
+                date_insc : {
+                    seconds : 1500000
+                }
+            }
+        },
+        {
+            uid : "In3522FFAUsOhdtrIzqg",
+            data : {
+                fullName :"Meridja Nassim",
+                phone :"0672439370",
+                etat : "Bon" ,
+                age :20,
+                categorie : "Gripe",
+                date_insc : {
+                    seconds : 1500000
+                }
+            }
+        },
     ], loading : false , error : null}
 }

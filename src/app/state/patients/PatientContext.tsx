@@ -1,10 +1,12 @@
-import React,{useState, PropsWithChildren, useEffect} from "react"
+import React,{useState, PropsWithChildren, useEffect, useLayoutEffect} from "react"
 import {PatientData} from '../../interfaces/patient'
 import { useMockPatientRawData } from "../../hooks/database.hook"
 
 interface PatientState {
 
   data : PatientData[],
+  displayedData : PatientData[] ,
+  setDisplayedData : React.Dispatch<React.SetStateAction<PatientData[]>>,
   loading : boolean,
   error : Error
 }
@@ -25,15 +27,18 @@ export const PatientProvider : React.FC= (props :PropsWithChildren<ProviderProps
 
     const [data,setData]= useState<PatientData[]>([]);
     const {data : rawData ,loading,error} = useMockPatientRawData()
-    useEffect(() => {
+    const [displayedData,setDisplayedData]= useState<PatientData[]>([]);
+    useLayoutEffect(() => {
         if(!loading) {
-           setData(rawData.map(({uid ,data}) => {
-               return {
-                   uid ,
-                    ...data,
-                date_insc : (new Date(data.date_insc.seconds)).toUTCString()
-               }
-           }));
+            let data = rawData.map(({uid ,data}) => {
+                return {
+                    uid ,
+                     ...data,
+                 date_insc : (new Date(data.date_insc.seconds)).toUTCString()
+                }
+            })
+           setData(data);
+           setDisplayedData(data)
         }else {
            setData([])
         }
@@ -42,6 +47,8 @@ export const PatientProvider : React.FC= (props :PropsWithChildren<ProviderProps
             value={
               {
                data ,
+               displayedData,
+               setDisplayedData,
                loading ,
                error
               }

@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react'
 import { Link } from '@reach/router'
 import Layout from '../../components/layout/layout'
 import { useFirebaseAuthState } from '../hooks/auth.hook'
+import { APP_HOME } from './routes';
 interface Props {
     path: string
 }
@@ -15,7 +16,7 @@ export default function Profile({ }: Props): ReactElement {
             Profile Page {loading ? 'loading user ... ' : user.uid}
             </div>
 
-            <Link to="/">Go back to home page</Link>
+            <Link to={APP_HOME}>Go back to home page</Link>
         </Layout>
     )
 }

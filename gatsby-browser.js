@@ -5,6 +5,16 @@
  */
 
 // You can delete this file if you're not using it
-import 'firebase/auth'
-import 'firebase/firestore'
-import './src/styles/global.css'
+import "firebase/auth"
+import "firebase/firestore"
+import "./src/styles/global.css"
+import React from "react"
+import { ScreenSizeProvider } from "./src/app/state/ScreenSizeContext"
+import { ConnexionProvider } from "./src/app/state/ConnexionContext"
+export const wrapRootElement = ({ element }) => {
+  return (
+    <ConnexionProvider>
+      <ScreenSizeProvider>{element}</ScreenSizeProvider>
+    </ConnexionProvider>
+  )
+}
