@@ -16,7 +16,13 @@ const Button = ({text , style, className ,icon ,color ,variant,size , ...rest}: 
     return (
         <Btn
         {...rest}
-        style={style}
+        style={{
+          color: "var(--blue)",
+          borderRadius: "50px",
+          padding: "10px 20px",
+          border: "2px solid var(--blue)",
+          ...style
+        }}
         variant={variant}
         color={color}
         size={size}

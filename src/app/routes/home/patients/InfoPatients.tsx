@@ -8,7 +8,8 @@ import InboxIcon from '@material-ui/icons/Inbox'
 import Modal from '../../../components/Modal'
 import Popper, { PopperPlacementType } from '@material-ui/core/Popper';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { IconButton, Typography, CircularProgress, ListItem, ListItemProps, ListItemIcon, ListItemText, Divider, List } from '@material-ui/core';
+import Button from '../../../components/Button'
+import { IconButton, Typography, CircularProgress, ListItem, ListItemProps, ListItemIcon, ListItemText, Divider, List} from '@material-ui/core';
 import PatientTable from '../../../components/PatientTable'
 import { PatientData } from '../../../interfaces/patient'
 import PatientContext from '../../../state/patients/PatientContext';
@@ -69,10 +70,33 @@ const useOptionsStyles = makeStyles((theme: Theme) =>
         typography: {
             padding: theme.spacing(10),
             paddingTop: 10,
-            color: 'var(--blue)'
+            color: 'var(--blue)',
+            fontFamily :"var(--font)"
         },
         paper: {
             boxShadow: "0px 6px 6px rgba(0,0,0,0.2)"
+        },
+        buttons : {
+            marginTop :"20px",
+            display : "flex",
+            justifyContent :"flex-end",
+            alignItems : "center"
+        },
+        mRight : {
+            marginRight : "20px"
+        },
+        modalTitle : {
+            marginBottom : "1rem",
+            fontFamily :"var(--font)"
+        },
+        modalSubtitle : {
+            marginBottom : "0.5rem",
+            fontFamily :"var(--font)",
+            color: 'var(--blue)',
+        },
+        modalContent : {
+            maxWidth :"600px",
+            fontFamily :"var(--font)"
         }
     }),
 );
@@ -96,6 +120,42 @@ interface OptionsProps {
     handleEdit: () => void,
     handleArchive: () => void
 }
+
+interface ModalContentProps {
+    classes : {
+        modalTitle : string,
+        modalSubtitle: string,
+        modalContent : string,
+        mRight :string,
+        buttons : string,
+    },
+    content : {
+        title : string,
+        subtitle : string,
+        body : string,
+        action : string
+    },
+    buttonStyles : {
+        left : {
+            color : string
+        }
+    },
+    handleAction : ()=>void,
+    handleCancel : ()=>void
+}
+const ModalContent : React.FC<ModalContentProps>= ({classes,content,buttonStyles,handleAction,handleCancel})=> {
+    return (<>
+    <Typography variant="h3" className={classes.modalTitle}>{content.title}</Typography>
+    <Typography variant="subtitle1" className={classes.modalSubtitle}>{content.subtitle}</Typography>
+    <Typography variant="body1" className={classes.modalContent}>{content.body}</Typography>
+        <div className={classes.buttons}>
+            <Button  className={classes.mRight} style={{
+                color :buttonStyles.left.color,
+                borderColor :buttonStyles.left.color
+            }} variant="outlined" text={content.action} size="large" onClick={handleAction}></Button>
+            <Button  text="Cancel" variant="text" size="large" onClick={handleCancel}></Button>
+        </div></>)
+}
 const Options: React.FC<OptionsProps> = ({ patient, handleDelete, handleEdit, handleArchive }) => {
     const [open, setOpen] = useState(false)
     const [anchorEl, setAnchorEl] = useState(null)
@@ -103,11 +163,54 @@ const Options: React.FC<OptionsProps> = ({ patient, handleDelete, handleEdit, ha
     const [archiveModalOpen, setArchiveModalOpen] = useState(false);
     const classes = useOptionsStyles();
     const optionClasses = useOptionStyles();
+    
     const DeleteModal = <Modal open={deleteModalOpen} handleClose={() => setDeleteModalOpen(false)}>
-        <div>Hello Delete</div>
-    </Modal>
+        <ModalContent
+            classes={{
+                modalTitle : classes.modalTitle,
+                modalContent : classes.modalContent,
+                modalSubtitle : classes.modalSubtitle,
+                mRight : classes.mRight,
+                buttons : classes.buttons
+            }}
+            content ={{
+                title : "Delete patient permenantly",
+                subtitle : `Patient ID : ${patient.uid}`,
+                body :"Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illo deleniti sed obcaecati quidem repudiandae soluta maiores cupiditate sint! Ipsam quo quas quasi error, praesentium aut sunt vero molestias iste dolorem.",
+                action : "DELETE"
+            }}
+            buttonStyles ={{
+                left : {
+                    color : "#f44336"
+                }
+            }}
+            handleAction={()=> alert("Deleting Patient ...")}
+            handleCancel={()=> setDeleteModalOpen(false)}
+        />
+                </Modal>
     const ArchiveModal = <Modal open={archiveModalOpen} handleClose={() => setArchiveModalOpen(false)}>
-        <div>Hello Archive</div>
+        <ModalContent
+            classes={{
+                modalTitle : classes.modalTitle,
+                modalContent : classes.modalContent,
+                modalSubtitle : classes.modalSubtitle,
+                mRight : classes.mRight,
+                buttons : classes.buttons
+            }}
+            content ={{
+                title : "Archive patient",
+                subtitle : `Patient ID : ${patient.uid}`,
+                body :"Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illo deleniti sed obcaecati quidem repudiandae soluta maiores cupiditate sint! Ipsam quo quas quasi error, praesentium aut sunt vero molestias iste dolorem.",
+                action : "ARCHIVE"
+            }}
+            buttonStyles ={{
+                left : {
+                    color : "#004d40"
+                }
+            }}
+            handleAction={()=> alert("Deleting Patient ...")}
+            handleCancel={()=> setArchiveModalOpen(false)}
+        />
     </Modal>
     return <>
         {DeleteModal}

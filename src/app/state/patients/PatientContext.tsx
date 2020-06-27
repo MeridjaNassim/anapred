@@ -12,6 +12,7 @@ interface PatientState {
 }
 const initialState :PatientState = {
     data : [],
+    displayedData : [],
     loading : true,
     error : null
 }

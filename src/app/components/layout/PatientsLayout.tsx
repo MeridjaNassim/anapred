@@ -69,12 +69,7 @@ const PatientsLayout = (props: PropsWithChildren<Props>) => {
                             e.preventDefault();
                             navigate('/app/home/Patients/ajout')
                         }}
-                        style={{
-                            color: "var(--blue)",
-                            borderRadius: "50px",
-                            padding: "20px",
-                            border: "2px solid var(--blue)"
-                        }} color="default" variant="outlined" size="medium" icon={<AddIcon></AddIcon>} />
+                     color="default" variant="outlined" size="medium" icon={<AddIcon></AddIcon>} />
                 </div>
                 <Fade timeout={600} appear={true} in={true}>
                     <>

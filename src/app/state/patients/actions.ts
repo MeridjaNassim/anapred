@@ -1,0 +1,19 @@
+type ACTION_TYPE = string;
+
+
+
+export type PATIENT_ACTION ="ALL" | "ALL_FILTER" |"ADD" | "DELETE" | "GET" | "UPDATE" | "ARCHIVE"
+
+export const GET_ALL : PATIENT_ACTION = "ALL";
+
+export const GET_ALL_FILTERED : PATIENT_ACTION = "ALL_FILTER";
+
+export const ADD_PATIENT : PATIENT_ACTION = "ADD";
+
+export const DELETE_PATIENT : PATIENT_ACTION = "DELETE";
+
+export const GET_ONE : PATIENT_ACTION = "GET";
+
+export const UPDATE_PATIENT : PATIENT_ACTION = "UPDATE";
+
+export const ARCHIVE_PATIENT : PATIENT_ACTION = "ARCHIVE";
