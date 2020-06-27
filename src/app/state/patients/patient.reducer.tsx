@@ -1,7 +1,7 @@
 
 import * as actions from './actions'
 import { PatientData } from '../../interfaces/patient'
-import { useReducer } from 'react';
+import { useReducer, Reducer } from 'react';
 
 interface Action {
     type : actions.PATIENT_ACTION,
@@ -9,13 +9,19 @@ interface Action {
     options?: any
 }
 interface PatientState {
-    patients : PatientData[]
+    patients : PatientData[],
+  displayedData : PatientData[] ,
+  loading : boolean,
+  error : Error
 }
 const initialState : PatientState ={
-    patients : []
+    patients : [],
+    displayedData :[],
+    loading : true,
+    error : null
 }
 
-const patientReducer = (state : PatientState ,action:Action) => {
+const patientReducer :Reducer<PatientState,Action> = (state : PatientState ,action:Action) => {
     switch (action.type) {
         case actions.GET_ALL:
             console.log("Getting all patients");
@@ -48,5 +54,5 @@ const patientReducer = (state : PatientState ,action:Action) => {
 
 export default function usePatientReducer(){
     return useReducer(patientReducer, initialState)
-    
+
 }

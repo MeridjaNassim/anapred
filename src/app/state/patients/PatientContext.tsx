@@ -1,6 +1,7 @@
 import React,{useState, PropsWithChildren, useEffect, useLayoutEffect} from "react"
 import {PatientData} from '../../interfaces/patient'
 import { useMockPatientRawData } from "../../hooks/database.hook"
+import usePatientReducer from "./patient.reducer"
 
 interface PatientState {
 

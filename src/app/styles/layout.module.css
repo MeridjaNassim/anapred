@@ -9,6 +9,9 @@
     --font-montserrat :'Montserrat', sans-serif;
     --blue : #1174EF;
     --light-blue : #11CBEF;
+    --red : #f44336;
+    --green : #00910c;
+    --border-radius : 20px;
     --main-sidebar-open-width : 85%;
 }
 .layout {
