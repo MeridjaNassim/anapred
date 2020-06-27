@@ -5,7 +5,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Paper from '@material-ui/core/Paper';
 import Fade from '@material-ui/core/Fade/Fade'
 import InboxIcon from '@material-ui/icons/Inbox'
-
+import Modal from '../../../components/Modal'
 import Popper, { PopperPlacementType } from '@material-ui/core/Popper';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { IconButton, Typography, CircularProgress, ListItem, ListItemProps, ListItemIcon, ListItemText, Divider, List } from '@material-ui/core';
@@ -68,8 +68,8 @@ const useOptionsStyles = makeStyles((theme: Theme) =>
         },
         typography: {
             padding: theme.spacing(10),
-            paddingTop : 10,
-            color : 'var(--blue)'
+            paddingTop: 10,
+            color: 'var(--blue)'
         },
         paper: {
             boxShadow: "0px 6px 6px rgba(0,0,0,0.2)"
@@ -82,7 +82,7 @@ const useOptionStyles = makeStyles((theme: Theme) =>
         root: {
             width: '100%',
             maxWidth: 600,
-            paddingTop : theme.spacing(2),
+            paddingTop: theme.spacing(2),
             backgroundColor: theme.palette.background.paper,
         },
     }),
@@ -90,13 +90,28 @@ const useOptionStyles = makeStyles((theme: Theme) =>
 function ListItemLink(props: ListItemProps<'a', { button?: true }>) {
     return <ListItem button component="a" {...props} />;
 }
-const Options: React.FC<{ patient: PatientData }> = ({ patient }) => {
+interface OptionsProps {
+    patient: PatientData,
+    handleDelete: () => void,
+    handleEdit: () => void,
+    handleArchive: () => void
+}
+const Options: React.FC<OptionsProps> = ({ patient, handleDelete, handleEdit, handleArchive }) => {
     const [open, setOpen] = useState(false)
     const [anchorEl, setAnchorEl] = useState(null)
+    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+    const [archiveModalOpen, setArchiveModalOpen] = useState(false);
     const classes = useOptionsStyles();
     const optionClasses = useOptionStyles();
+    const DeleteModal = <Modal open={deleteModalOpen} handleClose={() => setDeleteModalOpen(false)}>
+        <div>Hello Delete</div>
+    </Modal>
+    const ArchiveModal = <Modal open={archiveModalOpen} handleClose={() => setArchiveModalOpen(false)}>
+        <div>Hello Archive</div>
+    </Modal>
     return <>
-
+        {DeleteModal}
+        {ArchiveModal}
         <Popper open={open} anchorEl={anchorEl} placement="bottom-end" transition>
             {({ TransitionProps }) => (
                 <Fade {...TransitionProps} timeout={350}>
@@ -105,31 +120,33 @@ const Options: React.FC<{ patient: PatientData }> = ({ patient }) => {
                             <Typography className={classes.typography} variant="caption">Patient : {patient.uid}</Typography>
                             <List component="nav" aria-label="main mailbox folders">
                                 <ListItem button onClick={e => {
-                                        /// set Edit Patient
-                                        navigate("/app/home/Patients/Edit")
-                                    }}>
+                                    /// set Edit Patient
+                                    navigate("/app/home/Patients/Edit")
+
+                                }}>
                                     <ListItemIcon>
-                                        <EditIcon style={{color : "var(--blue)"}}/>
+                                        <EditIcon style={{ color: "var(--blue)" }} />
                                     </ListItemIcon>
-                                    <ListItemText  primary="Edit" />
-                                </ListItem>
-                                <ListItem button  onClick={e => {
-                                         /// Archive Patient
-                                         e.preventDefault()
-                                         alert("Archiving Patient: "+patient.uid)
-                                    }} >
-                                    <ListItemIcon>
-                                        <ArchiveIcon style={{color : "#004d40"}}/>
-                                    </ListItemIcon>
-                                    <ListItemText  primary="Archiver" />
+                                    <ListItemText primary="Edit" />
                                 </ListItem>
                                 <ListItem button onClick={e => {
-                                        /// Delete Patient
-                                        e.preventDefault()
-                                       alert("Deleting Patient : "+patient.uid)
-                                    }}>
+                                    /// Archive Patient
+                                    e.preventDefault()
+
+                                    setArchiveModalOpen(true)
+                                }} >
                                     <ListItemIcon>
-                                        <DeleteForeverIcon style={{color : "#f44336"}} />
+                                        <ArchiveIcon style={{ color: "#004d40" }} />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Archiver" />
+                                </ListItem>
+                                <ListItem button onClick={e => {
+                                    /// Delete Patient
+                                    e.preventDefault()
+                                    setDeleteModalOpen(true)
+                                }}>
+                                    <ListItemIcon>
+                                        <DeleteForeverIcon style={{ color: "#f44336" }} />
                                     </ListItemIcon>
                                     <ListItemText primary="Supprimer" />
                                 </ListItem>
@@ -144,28 +161,29 @@ const Options: React.FC<{ patient: PatientData }> = ({ patient }) => {
             setOpen(!open)
         }}>
             <MoreVertIcon style={{
-                color : (open ? "var(--blue)" :"grey")
-            }}/>
+                color: (open ? "var(--blue)" : "grey")
+            }} />
         </IconButton>
     </>
 }
 const InfoPatients = (props: Props) => {
     const { displayedData, loading, error } = useContext(PatientContext);
-    const renderData = (data: PatientData[], filter?: (data: PatientData[]) => PatientData[]): PatientData[] => {
+
+    const renderData = (data: PatientData[]): PatientData[] => {
 
         console.log("rendering data : ", data)
         return data.map((d) => {
             return {
                 ...d,
                 etat: <EtatPatient etat={d.etat}></EtatPatient>,
-                options: <Options patient={d}></Options>
+                options: <Options patient={d}
+                ></Options>
             }
         })
     }
 
     return (
         <PatientLayout>
-
             <PatientTable paginationStyle={allPatients.paginationStyle} style={allPatients.style} columns={allPatients.columns} data={renderData(displayedData)}></PatientTable>
 
         </PatientLayout>

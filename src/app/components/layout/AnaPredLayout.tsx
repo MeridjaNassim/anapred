@@ -111,12 +111,7 @@ const AnaPredLayout = ({ children }: PropsWithChildren<LayoutProps>) => {
     ///MediaQuery matcher 
     const matches = useMediaQuery('(max-width:1200px)');
     
-    // const handleSelectOnglet = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    //     setSelectedOnglet(e.target.id);
-    // }
-    // const isOngletActive = (route: string) => {
-    //     return selectedOnglet === route
-    // }
+
     return (
         <div className={styles.layout}>
             <CssBaseline></CssBaseline>
