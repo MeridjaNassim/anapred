@@ -31,7 +31,7 @@ export const APP_INTERVENTIONS = APP_BASE_ROUTE+routes.home.root+routes.home.rou
 export const APP_STATISTIQUES = APP_BASE_ROUTE+routes.home.root+routes.home.routes.statistiques
 export const APP_PREDICTIONS = APP_BASE_ROUTE+routes.home.root+routes.home.routes.predictions
 export const APP_PARAMETRES = APP_BASE_ROUTE+routes.home.root+routes.home.routes.parametres
-export const APP_DOCS = APP_BASE_ROUTE+routes.home.root+routes.home.routes.docs
+export const APP_DOCS = "/docs";
 
 export const AJOUT_PATIENT = APP_PATIENTS+routes.home.routes.patients.routes.ajout
 export const EDIT_PATIENT = APP_PATIENTS+routes.home.routes.patients.routes.edit
