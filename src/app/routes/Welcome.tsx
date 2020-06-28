@@ -45,6 +45,13 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  brand : {
+    position : 'absolute',
+    left : theme.spacing(5),
+    top : theme.spacing(3),
+    fontFamily : 'var(--font-montserrat)',
+    fontWeight : 600
+  }
 }));
 
 
@@ -81,6 +88,9 @@ export default function Welcome({} : Props) {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
+      <Typography component="h1" variant="h5" color="primary" className={classes.brand}>
+          ANAPRED
+        </Typography>
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
