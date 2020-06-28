@@ -183,6 +183,7 @@
     align-items: center;
     margin-left : 30%;
     width: 60%;
+    cursor: pointer;
 }
 #username {
     margin-left: 2%;
@@ -289,6 +290,7 @@
    }
    #user h4 {
     margin : 4px 0;
+    display: none;
    }
    #routeName {
        display: none;

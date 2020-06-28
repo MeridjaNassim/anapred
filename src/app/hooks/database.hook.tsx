@@ -1,7 +1,6 @@
 import { useState,useEffect } from "react";
 import { useCollection } from 'react-firebase-hooks/firestore'
 import firebase from 'firebase'
-import { PatientData } from "../interfaces/patient";
 
 
 /**

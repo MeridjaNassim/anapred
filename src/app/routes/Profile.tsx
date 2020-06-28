@@ -56,13 +56,15 @@ export default function Profile({ }: Props): ReactElement {
     const [user, loading, error] = useFirebaseAuthState();
     const [formData , setFormData] = useState({
         email : "",
-        displayName : ""
+        displayName : "",
+        imgUrl : ""
     })
     const handleUpdate = async ()=> {
         if(user) {
-            const {displayName} = formData
+            const {displayName,imgUrl} = formData
             await user.updateProfile({
-                displayName
+                displayName,
+                photoURL : imgUrl
             })
             alert("Updated profile with display Name "+displayName)
         }
@@ -74,7 +76,8 @@ export default function Profile({ }: Props): ReactElement {
         if(user) {
             setFormData({
                 email : user.email,
-                displayName : user.displayName
+                displayName : user.displayName,
+                imgUrl : user.photoURL
             })
         }
         
@@ -96,7 +99,7 @@ export default function Profile({ }: Props): ReactElement {
             {user && <>
             
             <Container className={classes.avatarContainer}>
-                    <Avatar src={avatar} className={[classes.large,classes.avatar]} >{user.displayName}</Avatar> 
+                    <Avatar src={user.photoURL} className={[classes.large,classes.avatar]} >{user.displayName}</Avatar> 
                     <Typography variant="h4" color="primary">{user.displayName}</Typography>
             </Container>
             <form className={classes.form} noValidate>
@@ -129,6 +132,20 @@ export default function Profile({ }: Props): ReactElement {
             onChange={e =>{
                 e.preventDefault()
                 setFormData({...formData , displayName : e.target.value})
+            }}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="imageUrl"
+            value={formData.imgUrl}
+            label="Profile Image URL"
+            id="imgUrl"
+            onChange={e =>{
+                e.preventDefault()
+                setFormData({...formData , imgUrl : e.target.value})
             }}
           />
           <Button

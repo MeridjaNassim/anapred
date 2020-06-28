@@ -25,6 +25,7 @@ export const routes = {
 }
 
 export const APP_HOME = APP_BASE_ROUTE+routes.home.root
+export const APP_PROFILE = APP_BASE_ROUTE+routes.profile
 export const APP_DASHBOARD = APP_BASE_ROUTE+routes.home.root+routes.home.routes.dashboard
 export const APP_PATIENTS = APP_BASE_ROUTE+routes.home.root+routes.home.routes.patients.root
 export const APP_INTERVENTIONS = APP_BASE_ROUTE+routes.home.root+routes.home.routes.interventions
