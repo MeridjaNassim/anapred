@@ -12,6 +12,7 @@ export const routes = {
                 routes : {
                     info : '/',
                     ajout : '/ajout',
+                    edit : '/edit'
                 }
             },
             interventions : "/Inteventions",
@@ -31,3 +32,6 @@ export const APP_STATISTIQUES = APP_BASE_ROUTE+routes.home.root+routes.home.rout
 export const APP_PREDICTIONS = APP_BASE_ROUTE+routes.home.root+routes.home.routes.predictions
 export const APP_PARAMETRES = APP_BASE_ROUTE+routes.home.root+routes.home.routes.parametres
 export const APP_DOCS = APP_BASE_ROUTE+routes.home.root+routes.home.routes.docs
+
+export const AJOUT_PATIENT = APP_PATIENTS+routes.home.routes.patients.routes.ajout
+export const EDIT_PATIENT = APP_PATIENTS+routes.home.routes.patients.routes.edit

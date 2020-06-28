@@ -7,6 +7,7 @@ import AddIcon from '@material-ui/icons/Add';
 import Fade from '@material-ui/core/Fade/Fade'
 import { navigate } from 'gatsby';
 import PatientContext from '../../state/patients/PatientContext';
+import { AJOUT_PATIENT } from '../../routes/routes';
 
 interface Props {
 
@@ -67,7 +68,7 @@ const PatientsLayout = (props: PropsWithChildren<Props>) => {
                     <Button text="Ajouter patient"
                         onClick={e => {
                             e.preventDefault();
-                            navigate('/app/home/Patients/ajout')
+                            navigate(AJOUT_PATIENT)
                         }}
                      color="default" variant="outlined" size="medium" icon={<AddIcon></AddIcon>} />
                 </div>

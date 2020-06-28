@@ -17,11 +17,10 @@ import ArchiveIcon from '@material-ui/icons/Archive';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { navigate } from 'gatsby';
 import { all_patient_columns } from '../../../utils/TableColumns';
+import { EDIT_PATIENT } from '../../routes';
 
 interface Props {
     path: string,
-    patientType: string,
-    data: PatientData[]
 }
 interface OptionsProps {
     patient: PatientData,
@@ -95,7 +94,7 @@ const ModalContent : React.FC<ModalContentProps>= ({classes,content,buttonStyles
             <Button  text="ANNULER" variant="text" size="large" onClick={handleCancel}></Button>
         </div></>)
 }
-const Options: React.FC<OptionsProps> = ({ patient, handleDelete, handleEdit, handleArchive }) => {
+const Options: React.FC<OptionsProps> = ({ patient}) => {
     const [open, setOpen] = useState(false)
     const [anchorEl, setAnchorEl] = useState(null)
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -163,7 +162,7 @@ const Options: React.FC<OptionsProps> = ({ patient, handleDelete, handleEdit, ha
                             <List component="nav" aria-label="main mailbox folders">
                                 <ListItem button onClick={e => {
                                     /// set Edit Patient
-                                    navigate("/app/home/Patients/Edit")
+                                    navigate(EDIT_PATIENT)
 
                                 }}>
                                     <ListItemIcon>
@@ -211,7 +210,7 @@ const Options: React.FC<OptionsProps> = ({ patient, handleDelete, handleEdit, ha
 const InfoPatients = (props: Props) => {
     const { displayedData, loading, error } = useContext(PatientContext);
 
-    const renderData = (data: PatientData[]): PatientData[] => {
+    const renderData = <T extends PatientData[] >(data:T): PatientData[] => {
 
         console.log("rendering data : ", data)
         return data.map((d) => {
