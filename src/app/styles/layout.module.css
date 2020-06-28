@@ -13,6 +13,7 @@
     --green : #00910c;
     --border-radius : 20px;
     --main-sidebar-open-width : 85%;
+   
 }
 .layout {
     font-family: var(--font) ;
@@ -270,24 +271,32 @@
    .optionsContainer {
        flex: 2;
        margin: 0;
-       margin-left: 2vw;
+       margin-left: 1%;
+
    }
+   .options {
+    flex: 1;
+    margin-left: 0%;
+    justify-content:flex-start !important;
+}
    .funcButton {
     padding : 2px 2px;
    }
    #user {
-         margin-right:  15%;
+       margin-left: 1%;
+        width: 50%;
        flex-direction: column;
    }
    #user h4 {
     margin : 4px 0;
    }
    #routeName {
-       flex: 0.5;
+       display: none;
    }
    #searchbar {
-       flex : 2 !important;
-   }
+       flex : 1 !important;
+    margin-left: 5%;
+    }
    .search{
     padding : 0;
    }
