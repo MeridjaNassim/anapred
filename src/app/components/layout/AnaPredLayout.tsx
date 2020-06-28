@@ -1,13 +1,12 @@
 import React, { PropsWithChildren, useContext, useEffect } from 'react'
 import styles from '../../styles/layout.module.css'
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { Avatar, Chip, createStyles, withStyles, Theme } from '@material-ui/core'
-import { Search } from '@material-ui/icons'
-import avatar from '../../images/profile.jpeg';
+import { Avatar, Chip} from '@material-ui/core'
+import { Search } from '@material-ui/icons';
 import WifiIcon from '@material-ui/icons/Wifi';
 import WifiOffIcon from '@material-ui/icons/WifiOff';
 import { navigate, Link } from 'gatsby';
-import Badge from '@material-ui/core/Badge';
+import StyledBadge from "../StyledBadge";
 import { useFirebaseAuthState, useFirebaseAuth } from '../../hooks/auth.hook';
 import SideBarContext from '../../state/SideBarContext';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -146,7 +145,7 @@ const AnaPredLayout = ({ children }: PropsWithChildren<LayoutProps>) => {
                             }}
                             variant="dot"
                         >
-                            <Avatar src={user.photoURL}>{loading ? "U" : null}</Avatar>
+                            <Avatar src={user?.photoURL}>{loading ? "U" : null}</Avatar>
                         </StyledBadge>
                         <h4 id={styles.username}>{loading ? "loading..." : user?.displayName}</h4>
                     </div>
@@ -177,34 +176,3 @@ const AnaPredLayout = ({ children }: PropsWithChildren<LayoutProps>) => {
 }
 
 export default AnaPredLayout
-const StyledBadge = withStyles((theme: Theme) =>
-  createStyles({
-    badge: {
-      backgroundColor: '#44b700',
-      color: '#44b700',
-      cursor : 'pointer',
-      boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
-      '&::after': {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        borderRadius: '50%',
-        animation: '$ripple 1.2s infinite ease-in-out',
-        border: '1px solid currentColor',
-        content: '""',
-      },
-    },
-    '@keyframes ripple': {
-      '0%': {
-        transform: 'scale(.8)',
-        opacity: 1,
-      },
-      '100%': {
-        transform: 'scale(2.4)',
-        opacity: 0,
-      },
-    },
-  }),
-)(Badge);

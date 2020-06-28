@@ -8,6 +8,7 @@ import Fade from '@material-ui/core/Fade/Fade'
 import { navigate } from 'gatsby';
 import PatientContext from '../../state/patients/PatientContext';
 import { AJOUT_PATIENT } from '../../routes/routes';
+import { GET_ALL_FILTERED, GET_ALL, ADD_PATIENT } from '../../state/patients/actions';
 
 interface Props {
 
@@ -35,18 +36,39 @@ const PatientsLayout = (props: PropsWithChildren<Props>) => {
     const handleClickOnRoute = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
         setActiveRoute(e.target.id)
     }
-    const { data, displayedData, setDisplayedData } = useContext(PatientContext);
-    useLayoutEffect(() => {
-        console.log("Filtering data ", activeRoute)
-        if (activeRoute === "Tout") {
-            console.log("Data : ", data);
-            return setDisplayedData(data);
-        } else if (activeRoute === "Normal") {
-            return setDisplayedData(data.filter(item => item?.categorie !== "Pandemie"))
-        }
-        return setDisplayedData(data.filter(item => item?.categorie === activeRoute))
+    const {data, displayedData ,dispatch } = useContext(PatientContext);
 
-    }, [activeRoute])
+    const handleRouteChangeOrDataUpdate =()=> {
+        if (activeRoute === "Tout") {
+            return dispatch({
+                type : GET_ALL,
+            })
+        } else if (activeRoute === "Normal") {
+            return dispatch({
+                type : GET_ALL_FILTERED,
+                options :{
+                    filterField : "categorie",
+                    filterValue :"Pandemie",
+                    equal : false
+                }
+            })
+            //return setDisplayedData(data.filter(item => item?.categorie !== "Pandemie"))
+        }
+        return dispatch({
+            type : GET_ALL_FILTERED,
+            options :{
+                filterField : "categorie",
+                filterValue :activeRoute,
+                equal : true
+            }
+        })
+        //return setDisplayedData(data.filter(item => item?.categorie === activeRoute))
+    }
+
+    useLayoutEffect(() => {
+        handleRouteChangeOrDataUpdate()
+
+    }, [activeRoute,data])
     return (
         <div className={styles.layout}>
             <nav className={styles.navbar}>
@@ -68,6 +90,16 @@ const PatientsLayout = (props: PropsWithChildren<Props>) => {
                     <Button text="Ajouter patient"
                         onClick={e => {
                             e.preventDefault();
+                            dispatch({
+                                type : ADD_PATIENT,
+                                payload : {
+                                    fullName :"AbdellKader",
+                                    phone : "XXXXXXXXX",
+                                    categorie : "Pandemie",
+                                    etat : "Urgent",
+                                    date_insc : (new Date()).toUTCString()
+                                }
+                            })
                             navigate(AJOUT_PATIENT)
                         }}
                      color="default" variant="outlined" size="medium" icon={<AddIcon></AddIcon>} />

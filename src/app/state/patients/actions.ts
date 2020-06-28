@@ -2,8 +2,10 @@ type ACTION_TYPE = string;
 
 
 
-export type PATIENT_ACTION ="ALL" | "ALL_FILTER" |"ADD" | "DELETE" | "GET" | "UPDATE" | "ARCHIVE"
+export type PATIENT_ACTION ="ALL" | "ALL_FILTER" |"ADD" | "DELETE" | "GET" | "UPDATE" | "ARCHIVE" | "INIT"
 
+
+export const INIT_DATA : PATIENT_ACTION ="INIT"
 export const GET_ALL : PATIENT_ACTION = "ALL";
 
 export const GET_ALL_FILTERED : PATIENT_ACTION = "ALL_FILTER";

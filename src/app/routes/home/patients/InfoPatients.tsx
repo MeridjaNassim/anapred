@@ -18,6 +18,7 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { navigate } from 'gatsby';
 import { all_patient_columns } from '../../../utils/TableColumns';
 import { EDIT_PATIENT } from '../../routes';
+import { GET_ONE, DELETE_PATIENT } from '../../../state/patients/actions';
 
 interface Props {
     path: string,
@@ -99,6 +100,7 @@ const Options: React.FC<OptionsProps> = ({ patient}) => {
     const [anchorEl, setAnchorEl] = useState(null)
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
     const [archiveModalOpen, setArchiveModalOpen] = useState(false);
+    const {dispatch} = useContext(PatientContext)
     const classes = useOptionsStyles();
     const optionClasses = useOptionStyles();
     
@@ -122,7 +124,15 @@ const Options: React.FC<OptionsProps> = ({ patient}) => {
                     color : "var(--red)"
                 }
             }}
-            handleAction={()=> alert("Deleting Patient ...")}
+            handleAction={()=> {
+                dispatch({
+                    type : DELETE_PATIENT,
+                    payload :{
+                        uid : patient.uid
+                    }
+                })
+                alert("Deleted patient " + patient.uid)
+            }}
             handleCancel={()=> setDeleteModalOpen(false)}
         />
                 </Modal>
@@ -146,7 +156,9 @@ const Options: React.FC<OptionsProps> = ({ patient}) => {
                     color : "var(--green)"
                 }
             }}
-            handleAction={()=> alert("Deleting Patient ...")}
+            handleAction={()=> {
+              
+            }}
             handleCancel={()=> setArchiveModalOpen(false)}
         />
     </Modal>
@@ -162,6 +174,12 @@ const Options: React.FC<OptionsProps> = ({ patient}) => {
                             <List component="nav" aria-label="main mailbox folders">
                                 <ListItem button onClick={e => {
                                     /// set Edit Patient
+                                    dispatch({
+                                        type : GET_ONE,
+                                        payload : {
+                                            uid : patient.uid
+                                        }
+                                    })
                                     navigate(EDIT_PATIENT)
 
                                 }}>

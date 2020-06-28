@@ -1,13 +1,14 @@
 import React,{useState, PropsWithChildren, useEffect, useLayoutEffect} from "react"
 import {PatientData} from '../../interfaces/patient'
 import { useMockPatientRawData } from "../../hooks/database.hook"
-import usePatientReducer from "./patient.reducer"
-
+import usePatientReducer, { Action } from "./patient.reducer"
+import { ADD_PATIENT, GET_ALL, INIT_DATA } from "./actions"
 interface PatientState {
 
   data : PatientData[],
   displayedData : PatientData[] ,
-  setDisplayedData : React.Dispatch<React.SetStateAction<PatientData[]>>,
+  dispatch :  React.Dispatch<Action>,
+  currentPatient : PatientData,
   loading : boolean,
   error : Error
 }
@@ -15,7 +16,9 @@ const initialState :PatientState = {
     data : [],
     displayedData : [],
     loading : true,
-    error : null
+    error : null,
+    currentPatient : null,
+    dispatch : null
 }
 
 
@@ -27,11 +30,13 @@ interface ProviderProps {
 export default PatientContext
 export const PatientProvider : React.FC= (props :PropsWithChildren<ProviderProps>)=>{
 
-    const [data,setData]= useState<PatientData[]>([]);
+    // const [data,setData]= useState<PatientData[]>([]);
     const {data : rawData ,loading,error} = useMockPatientRawData()
-    const [displayedData,setDisplayedData]= useState<PatientData[]>([]);
+    // const [displayedData,setDisplayedData]= useState<PatientData[]>([]);
+    const [state,dispatch] = usePatientReducer();
     useLayoutEffect(() => {
         if(!loading) {
+
             let data = rawData.map(({uid ,data}) => {
                 return {
                     uid ,
@@ -39,20 +44,28 @@ export const PatientProvider : React.FC= (props :PropsWithChildren<ProviderProps
                  date_insc : (new Date(data.date_insc.seconds)).toUTCString()
                 }
             })
-           setData(data);
-           setDisplayedData(data)
+        dispatch({
+            type: INIT_DATA,
+            payload : data
+        })
+        //    setData(data);
+        //    setDisplayedData(data)
         }else {
-           setData([])
+         dispatch({
+             type: INIT_DATA,
+             payload : []
+         })
         }
     }, [loading])
     return <PatientContext.Provider
             value={
               {
-               data ,
-               displayedData,
-               setDisplayedData,
-               loading ,
-               error
+               data : state?.patients ,
+               displayedData : state?.displayedData,
+               dispatch,
+               currentPatient : state?.currentPatient,
+               loading :state?.loading,
+               error :state?.error
               }
             }
         >
