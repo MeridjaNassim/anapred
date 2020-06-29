@@ -37,6 +37,7 @@
     align-items: center;
     position: fixed;
     padding-right: 0;
+    padding-top: 20px;
     top: 0;
     left: 0;
     z-index: 10;
@@ -104,6 +105,9 @@
     padding:5% 10%;
     color : lightskyblue;
     font-family: var(--font-montserrat ) !important;
+}
+.menu {
+
 }
 .brand.title{
     font-weight: 600;
@@ -252,6 +256,7 @@
     }
     .sidebar {
         width : 15%;
+      
     }
     .sidebarOpen {
         width: 25%;

@@ -10,6 +10,7 @@ import StyledBadge from "../StyledBadge";
 import { useFirebaseAuthState, useFirebaseAuth } from '../../hooks/auth.hook';
 import SideBarContext from '../../state/SideBarContext';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import MenuOpenIcon from '@material-ui/icons/MenuOpen';
 import { APP_HOME, APP_DASHBOARD, APP_PATIENTS, APP_INTERVENTIONS, APP_STATISTIQUES, APP_PREDICTIONS, APP_PARAMETRES, APP_DOCS, APP_BASE_ROUTE, APP_PROFILE } from '../../routes/routes';
 import { Location } from '@reach/router'
 import ConnexionContext from '../../state/ConnexionContext';
@@ -69,14 +70,15 @@ const SideBar: React.FC<SideBarProps> = ({ sidebarOpen, isMobile, toggle }) => {
                 toggle()
             }
         }}>
-            <Link to={APP_HOME}>
-                <h1 id={styles.title} style={{
+              
+          
+            
+            {((!isMobile ) && sidebarOpen) ? <h1 id={styles.title} style={{
                     fontSize: `${sidebarOpen ? "1.5rem" : "0.75rem"}`
-                }}><span style={{ color: 'var(--light-blue)' }}>ANA</span><span style={{ color: 'var(--blue)' }}>PRED</span></h1>
-            </Link>
-
+                }}><span style={{ color: 'var(--light-blue)' }}>ANA</span><span style={{ color: 'var(--blue)' }}>PRED</span></h1> : <MenuOpenIcon color="primary"></MenuOpenIcon>}
         </div>
         <div className={styles.funcs}>
+        <SideBarNavigationItem id="Home" route={APP_HOME} showContent={sidebarOpen} showText={!isMobile} icon={require('./icons/homepage.svg')} />
             <SideBarNavigationItem id="Dashboard" route={APP_DASHBOARD} showContent={sidebarOpen} showText={!isMobile} icon={require('./icons/dashboard.svg')} />
             <SideBarNavigationItem id="Patients" route={APP_PATIENTS} showContent={sidebarOpen} showText={!isMobile} icon={require('./icons/patient.svg')} />
             <SideBarNavigationItem route={APP_INTERVENTIONS} id="Interventions" showContent={sidebarOpen} showText={!isMobile} icon={require('./icons/intervention.svg')} />

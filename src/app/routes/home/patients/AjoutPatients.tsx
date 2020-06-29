@@ -270,6 +270,7 @@ const AjoutPatients = (props: Props) => {
                                     value={values.numeroTelephone}
                                     type="phone"
                                     variant="outlined"
+                                    autoComplete
                                     style={{ margin: 16, width: '335px', }}
                                     size="small"
                                     onChange={handleChangeForm("numeroTelephone")}
