@@ -72,7 +72,7 @@ const SideBar: React.FC<SideBarProps> = ({ sidebarOpen, isMobile, toggle }) => {
         }}>
               
           
-            
+             
             {((!isMobile ) && sidebarOpen) ? <h1 id={styles.title} style={{
                     fontSize: `${sidebarOpen ? "1.5rem" : "0.75rem"}`
                 }}><span style={{ color: 'var(--light-blue)' }}>ANA</span><span style={{ color: 'var(--blue)' }}>PRED</span></h1> : <MenuOpenIcon color="primary"></MenuOpenIcon>}
@@ -96,7 +96,6 @@ const SideBar: React.FC<SideBarProps> = ({ sidebarOpen, isMobile, toggle }) => {
         <div className={styles.connectionState}>
             <ConnexionStatus online={isConnected}></ConnexionStatus>
         </div>
-        <p style={{ marginTop: '40px', textAlign: "center", fontSize: "0.8rem" }}>Version 0.1.0</p>
     </aside>
 }
 

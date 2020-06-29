@@ -57,6 +57,7 @@ export default function Main({ }: Props): ReactElement {
                     <img className={classes.image} src={require('../../../images/patients.png')} width="100%"></img>
                     <Button  text="Go to Patients" onClick={e => navigate(APP_PATIENTS)}/>
                 </Paper>
+               
             </Container>
 
         </Container>

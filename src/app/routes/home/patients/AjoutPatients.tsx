@@ -55,6 +55,7 @@ const AjoutPatients = (props: Props) => {
         dispatch({
             type: ADD_PATIENT,
             payload: {
+                ...values,
                 fullName: values.prenom.trim() + " " + values.nom.trim(),
                 phone: values.numeroTelephone,
                 categorie: values.typeMaladie,
@@ -118,7 +119,7 @@ const AjoutPatients = (props: Props) => {
     return (
         <form onSubmit={onSubmit} autoComplete="off" >
             <div>
-                <AjouterPatientLayout text="Informations relatif au patient">
+                <AjouterPatientLayout title="Ajouter patient" text="Informations relatif au patient">
                     <Modal open={modal} handleClose={()=> setModal(false)}>
                         <Typography color="primary" style={{
                                 marginBottom: "100px"

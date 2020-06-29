@@ -82,16 +82,14 @@ const addOnePatient = (state : PatientState , payload :any) :PatientState => {
         patients : data
     }
 }
+///TODO FIX BUG
 const updateOnePatient =  (state : PatientState , payload :any) :PatientState => {
     let data = state.patients;
     let patient = data.find(item => item.uid === payload?.uid);
     if(patient) {
-        data = data.filter(item => item.uid === patient.uid)
-        data.push({...patient , ...payload})
-        return {
-            ...state ,
-            patients : data
-        }
+        let s = deleteOnePatient(state,patient)
+        s.patients.push({...patient,...payload})
+        return s
     }
     return state
 }

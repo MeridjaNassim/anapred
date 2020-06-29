@@ -42,11 +42,11 @@ module.exports = {
       resolve: `gatsby-plugin-manifest`,
       
       options: {
-        name: `gatsby-starter-typescript-pwa`,
-        short_name: `starter`,
+        name: `AnaPred`,
+        short_name: `anapred`,
         start_url: `/`,
-        background_color: `#663399`,
-        theme_color: `#663399`,
+        background_color: `#1174EF`,
+        theme_color: `#1174EF`,
         display: `minimal-ui`,
         icon: `src/images/logo.png`, // This path is relative to the root of the site.
       },

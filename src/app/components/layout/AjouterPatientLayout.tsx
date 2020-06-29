@@ -43,7 +43,7 @@ const AjouterPatientLayout = (props: PropsWithChildren<Props>) => {
           <ArrowBackIosIcon  style={{ color:'white' }} fontSize="small"/>
         </IconButton>
                
-                    <Route id="AjouterPatient" title="Ajouter Patient" isActive={isActive} onClick={handleClickOnRoute}></Route>
+                    <Route id="AjouterPatient" title={props.title} isActive={isActive} onClick={handleClickOnRoute}></Route>
                    
                 </ul>
             </nav>

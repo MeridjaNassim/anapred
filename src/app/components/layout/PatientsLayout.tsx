@@ -101,16 +101,6 @@ const PatientsLayout = (props: PropsWithChildren<Props>) => {
                     <Button text="Ajouter patient"
                         onClick={e => {
                             e.preventDefault();
-                            dispatch({
-                                type : ADD_PATIENT,
-                                payload : {
-                                    fullName :"AbdellKader",
-                                    phone : "XXXXXXXXX",
-                                    categorie : "Pandemie",
-                                    etat : "Urgent",
-                                    date_insc : (new Date()).toUTCString()
-                                }
-                            })
                             navigate(AJOUT_PATIENT)
                         }}
                      color="default" variant="outlined" size="medium" icon={<AddIcon></AddIcon>} />

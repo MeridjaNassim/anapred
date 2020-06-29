@@ -21,7 +21,8 @@
    box-sizing: content-box;
 }
 .connectionState {
-    margin-top:auto ;
+    position: absolute;
+    bottom: 10%;
 
 }
 .sidebar {
