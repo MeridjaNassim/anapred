@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
+import Button from '../components/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -14,6 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { navigate } from 'gatsby';
 import { useEmailPasswordCredentials, useFirebaseAuth } from '../hooks/auth.hook';
+import { APP_HOME } from './routes';
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -83,7 +84,7 @@ export default function Welcome({} : Props) {
     e.preventDefault();
     console.log(credentials)
     await signInWithEmailAndPassword(credentials);
-    navigate('/app/home/dashboard')
+    navigate(APP_HOME)
   }
   return (
     <Container component="main" maxWidth="xs">
@@ -134,14 +135,12 @@ export default function Welcome({} : Props) {
           <Button
             type="submit"
             fullWidth
-            variant="contained"
-            color="primary"
+            text=" Sign In"
             className={classes.submit}
             onClick={handleSignIn}
-          >
-            Sign In
-          </Button>
-          <Grid container>
+          />
+           
+            <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">
                 Forgot password?

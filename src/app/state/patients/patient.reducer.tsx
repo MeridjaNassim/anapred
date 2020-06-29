@@ -2,6 +2,7 @@
 import * as actions from './actions'
 import { PatientData } from '../../interfaces/patient'
 import { useReducer, Reducer } from 'react';
+import { downloadPatientAsJsonData } from '../../services/downloadManager';
 export interface Action {
     type : actions.PATIENT_ACTION,
     payload?: any,
@@ -85,7 +86,7 @@ const updateOnePatient =  (state : PatientState , payload :any) :PatientState =>
     let data = state.patients;
     let patient = data.find(item => item.uid === payload?.uid);
     if(patient) {
-        data.filter(item => item=== patient)
+        data = data.filter(item => item.uid === patient.uid)
         data.push({...patient , ...payload})
         return {
             ...state ,
@@ -96,13 +97,42 @@ const updateOnePatient =  (state : PatientState , payload :any) :PatientState =>
 }
 const deleteOnePatient = (state : PatientState , payload :{uid : string}) :PatientState => {
     let data = state.patients;
-    console.log("uid : " , payload.uid)
     data = data.filter(item =>  item.uid !== payload.uid)
     console.log(data)
     return {
         ...state ,
         patients : data
     }
+}
+
+const archiveOnePatient = (state : PatientState , payload : {uid : string}): PatientState => {
+    let data = state.patients;
+    console.log("first data" ,data)
+    let patient = data.find(item => item.uid === payload?.uid);
+    console.log("first patient" ,patient)
+    if(patient) {
+        data = data.filter(item => item!== patient)
+        console.log("2nd data" ,data)
+        data.push({
+            ...patient,
+            archived : true,
+            archivedAt : (new Date()).toUTCString()
+        })
+        console.log("3rd data" ,data)
+        return {
+            ...state ,
+            patients : data
+        }
+    }
+   return state
+}
+
+const downloadPatient = (state : PatientState , payload : {uid : string}): PatientState => {
+   let patient = state.patients.find(item => item.uid === payload.uid)
+   if(patient) {
+       downloadPatientAsJsonData(patient)
+   }
+   return state
 }
 const patientReducer :Reducer<PatientState,Action> = (state : PatientState ,action:Action) => {
     switch (action.type) {
@@ -136,8 +166,11 @@ const patientReducer :Reducer<PatientState,Action> = (state : PatientState ,acti
             return deleteOnePatient(state,action.payload)
             break;
         case actions.ARCHIVE_PATIENT:
-            console.log("Archiving patient");
+            return archiveOnePatient(state , action.payload)
             break;
+        case actions.DOWNLOAD_PATIENT:
+            return downloadPatient(state , action.payload)
+                    
         default:
             break;
     }

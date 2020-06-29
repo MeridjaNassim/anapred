@@ -13,6 +13,7 @@
     --green : #00910c;
     --border-radius : 20px;
     --main-sidebar-open-width : 85%;
+    --drop-shadow : 0px 1px 10px rgba(0,0,0,0.2);
    
 }
 .layout {

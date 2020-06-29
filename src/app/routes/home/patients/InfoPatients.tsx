@@ -14,11 +14,12 @@ import { PatientData, Etat } from '../../../interfaces/patient'
 import PatientContext from '../../../state/patients/PatientContext';
 import EditIcon from '@material-ui/icons/Edit';
 import ArchiveIcon from '@material-ui/icons/Archive';
+import DownloadIcon from '@material-ui/icons/CloudDownload'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { navigate } from 'gatsby';
 import { all_patient_columns } from '../../../utils/TableColumns';
 import { EDIT_PATIENT } from '../../routes';
-import { GET_ONE, DELETE_PATIENT } from '../../../state/patients/actions';
+import { GET_ONE, DELETE_PATIENT, ARCHIVE_PATIENT, DOWNLOAD_PATIENT } from '../../../state/patients/actions';
 
 interface Props {
     path: string,
@@ -55,16 +56,16 @@ const EtatPatient: React.FC<{ etat: Etat }> = ({ etat }) => {
         switch (etat) {
             case "Bon":
                 return "green"
-                break;
+               
             case "Normal":
                 return "lightgreen"
-                break;
+                
             case "Urgent":
                 return "orange"
-                break;
+                
             case "Critique":
                 return "red"
-                break;
+               
         }
     }
 
@@ -103,7 +104,6 @@ const Options: React.FC<OptionsProps> = ({ patient}) => {
     const {dispatch} = useContext(PatientContext)
     const classes = useOptionsStyles();
     const optionClasses = useOptionStyles();
-    
     const DeleteModal = <Modal open={deleteModalOpen} handleClose={() => setDeleteModalOpen(false)}>
         <ModalContent
             classes={{
@@ -114,9 +114,9 @@ const Options: React.FC<OptionsProps> = ({ patient}) => {
                 buttons : classes.buttons
             }}
             content ={{
-                title : "Delete patient permenantly",
+                title : "Supprimer le patient",
                 subtitle : `Patient ID : ${patient.uid}`,
-                body :"Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illo deleniti sed obcaecati quidem repudiandae soluta maiores cupiditate sint! Ipsam quo quas quasi error, praesentium aut sunt vero molestias iste dolorem.",
+                body :"Cette action ne prendra effet que après 30j , le patient serra archiver pendant cette période et ne figurera plus dans la liste des patients , veuillez être sur que vous voulez effectuer cette tâche",
                 action : "SUPPRIMER"
             }}
             buttonStyles ={{
@@ -131,7 +131,7 @@ const Options: React.FC<OptionsProps> = ({ patient}) => {
                         uid : patient.uid
                     }
                 })
-                alert("Deleted patient " + patient.uid)
+                // setDeleteModalOpen(false)
             }}
             handleCancel={()=> setDeleteModalOpen(false)}
         />
@@ -157,7 +157,14 @@ const Options: React.FC<OptionsProps> = ({ patient}) => {
                 }
             }}
             handleAction={()=> {
-              
+                dispatch({
+                    type : ARCHIVE_PATIENT,
+                    payload :{
+                        uid : patient.uid
+                    }
+                })
+                setArchiveModalOpen(false)
+                setOpen(false)
             }}
             handleCancel={()=> setArchiveModalOpen(false)}
         />
@@ -198,6 +205,22 @@ const Options: React.FC<OptionsProps> = ({ patient}) => {
                                         <ArchiveIcon style={{ color: "var(--green)" }} />
                                     </ListItemIcon>
                                     <ListItemText primary="Archiver le patient" />
+                                </ListItem>
+                                <ListItem button onClick={e => {
+                                    /// Archive Patient
+                                    e.preventDefault()
+
+                                   dispatch({
+                                       type : DOWNLOAD_PATIENT,
+                                       payload : {
+                                           uid : patient.uid
+                                       }
+                                   })
+                                }} >
+                                    <ListItemIcon>
+                                        <DownloadIcon color="secondary" />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Télécharger les infos du patient" />
                                 </ListItem>
                                 <ListItem button onClick={e => {
                                     /// Delete Patient

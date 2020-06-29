@@ -1,7 +1,7 @@
 import React, { PropsWithChildren, useState, useRef, useContext, useLayoutEffect } from 'react'
 import styles from '../../styles/patientLayout.module.css';
 
-import { Typography, IconButton } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import Button from '../Button';
 import AddIcon from '@material-ui/icons/Add';
 import Fade from '@material-ui/core/Fade/Fade'

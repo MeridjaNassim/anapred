@@ -3,12 +3,13 @@ import { Link } from '@reach/router'
 import Layout from '../../components/layout/layout'
 import { useFirebaseAuthState } from '../hooks/auth.hook'
 import { APP_HOME } from './routes';
-import { Avatar, Container, Typography, TextField, FormControlLabel } from '@material-ui/core';
+import { Avatar, Container, Typography, TextField } from '@material-ui/core';
 import avatar from '../images/profile.jpeg'
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { ArrowBackIos } from '@material-ui/icons';
+import { ArrowBackIos, Navigation } from '@material-ui/icons';
 import Button from '../components/Button';
 import StyledBadge from '../components/StyledBadge';
+import { PageProps } from 'gatsby';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -52,7 +53,7 @@ interface Props {
     path: string
 }
 
-export default function Profile({ }: Props): ReactElement {
+export default function Profile({ }: PageProps): ReactElement {
     const classes = useStyles();
     const [user, loading, error] = useFirebaseAuthState();
     const [formData, setFormData] = useState({
@@ -81,7 +82,6 @@ export default function Profile({ }: Props): ReactElement {
                 imgUrl: user.photoURL
             })
         }
-
     }, [user])
     return (
         <Layout>
@@ -170,7 +170,7 @@ export default function Profile({ }: Props): ReactElement {
                     </form>
                 </>}
 
-
+                    
                 <Link to={APP_HOME} className={classes.return}><ArrowBackIos color="primary" titleAccess="retour" /></Link>
             </Container>
         </Layout>

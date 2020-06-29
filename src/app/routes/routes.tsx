@@ -6,6 +6,7 @@ export const routes = {
     home : {
         root :'/home',
         routes : {
+            home : "/",
             dashboard : '/Dashboard',
             patients: {
                 root : '/Patients',
