@@ -1,17 +1,21 @@
 
 
-import React from "react";
+import React, { useContext } from "react";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
 import styles from '../../../styles/patientLayout.module.css';
-import firebase from "firebase"
 import AjouterPatientLayout from "../../../components/layout/AjouterPatientLayout";
 import Typography from "@material-ui/core/Typography";
 import Switch from "@material-ui/core/Switch";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Button from '../../../components/Button'
 import { navigate } from "gatsby";
+import { APP_PATIENTS } from "../../routes";
+import PatientContext from "../../../state/patients/PatientContext";
+import { ADD_PATIENT } from "../../../state/patients/actions";
+import Modal from "../../../components/Modal";
+
 
 
 
@@ -23,12 +27,16 @@ const useStyles = makeStyles(theme => ({
         marginLeft: theme.spacing(1),
         marginRight: theme.spacing(1),
         width: "25ch"
+    },
+    virus: {
+        position: "absolute",
+        top: "30vh",
+        left: "1%"
     }
 }));
 
 /* lists of droplist content*/
 const sexes = [{ value: "Masculin", label: "Masculin" }, { value: "Feminin", label: "Feminin" }];
-const ages = [{ value: "6", label: "6" }, { value: "7", label: "7" }, { value: "8", label: "8" }, { value: "18", label: "18" }, { value: "20", label: "20" }];
 const wilayas = [{ value: "Alger", label: "Alger" }, { value: "Blida", label: "Blida" }];
 const communes = [{ value: "Alger", label: "Alger" }, { value: "Alger", label: "Alger" }];
 //#############################################################
@@ -38,12 +46,24 @@ interface Props {
 
 
 const AjoutPatients = (props: Props) => {
-
+    const classes = useStyles();
+    const { dispatch } = useContext(PatientContext)
     /* on submit form function*/
     const onSubmit = e => {
 
         console.log(values)
-
+        dispatch({
+            type: ADD_PATIENT,
+            payload: {
+                fullName: values.prenom.trim() + " " + values.nom.trim(),
+                phone: values.numeroTelephone,
+                categorie: values.typeMaladie,
+                age: values.age,
+                etat: "Urgent",
+                date_insc: (new Date()).toUTCString(),
+            }
+        })
+        setModal(true)
         /* here the connection with the data base*/
         e.preventDefault()
         /* firebase
@@ -88,6 +108,7 @@ const AjoutPatients = (props: Props) => {
         checkedA: true,
     });
 
+    const [modal ,setModal] =React.useState(false)
 
     const handleChange = (event) => {
         setState({ ...state, [event.target.name]: event.target.checked });
@@ -98,6 +119,25 @@ const AjoutPatients = (props: Props) => {
         <form onSubmit={onSubmit} autoComplete="off" >
             <div>
                 <AjouterPatientLayout text="Informations relatif au patient">
+                    <Modal open={modal} handleClose={()=> setModal(false)}>
+                        <Typography color="primary" style={{
+                                marginBottom: "100px"
+                                ,
+                                textAlign :"center"
+                            }} variant="h6" gutterBottom>
+                                Patient ajouté
+                        </Typography>
+                        <Button text="Fermer"
+                                onClick={e => {
+                                    e.preventDefault();
+                                    setModal(false)
+                                }}
+                                style={{
+                                    alignSelf : "center",
+                                    color: "var(--red)",
+                                    borderColor: "var(--red)"
+                                }} size="medium" />
+                    </Modal>
                     <div style={{ width: '66%', margin: 'auto' }} >
 
                         <div>
@@ -158,21 +198,18 @@ const AjoutPatients = (props: Props) => {
                             />
                             <TextField
                                 id="age"
-                                select
                                 label="Age"
+                                type="number"
+                                min={0}
+                                max={100}
                                 value={values.age}
                                 onChange={handleChangeForm("age")}
 
                                 variant="outlined"
                                 style={{ margin: 16, width: '162px', }}
                                 size="small"
-                            >
-                                {ages.map(option => (
-                                    <MenuItem key={option.value} value={option.value}>
-                                        {option.label}
-                                    </MenuItem>
-                                ))}
-                            </TextField>
+                            />
+
                             <div />
                             <div>
                                 <TextField
@@ -302,10 +339,13 @@ const AjoutPatients = (props: Props) => {
                 </AjouterPatientLayout>
                 <div className={styles.layout}>
                     <section className={styles.contentArea}>
-
+                        <div style={{
+                            position: "relative"
+                        }}>
+                            <img src={require('../../../components/layout/icons/virus.svg')} className={classes.virus} width="10%"></img>
+                        </div>
                         <div style={{ padding: '15px 5vw' }} className={styles.contentHeader}>
-                            <Typography style={{
-                                color: 'var(--light-blue)',
+                            <Typography color="primary" style={{
                                 marginBottom: "20px"
 
                             }} variant="h6" gutterBottom>
@@ -383,22 +423,20 @@ const AjoutPatients = (props: Props) => {
                         width: '160px',
                         margin: '5%',
                         marginBottom: '120px',
-                        color: "white",
-                        background: "rgb(17, 116, 239)"
-                    }} color="default" variant="contained" size="medium" />
+                    }} size="medium" />
 
                 <Button text="Annuler"
                     onClick={e => {
                         e.preventDefault();
-                        navigate('/app/home/Patients')
+                        navigate(APP_PATIENTS)
                     }}
                     style={{
                         width: '160px',
                         margin: '5%',
                         marginBottom: '120px',
-                        color: "white",
-                        background: "#7E0000"
-                    }} color="default" variant="contained" size="medium" />
+                        color: "var(--red)",
+                        borderColor: "var(--red)"
+                    }} size="medium" />
             </div>
         </form>
     );

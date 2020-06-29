@@ -7,6 +7,7 @@ import Button from '../Button';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
 import { navigate } from 'gatsby';
+import { APP_PATIENTS } from '../../routes/routes';
 interface Props {
 
 }
@@ -36,7 +37,7 @@ const AjouterPatientLayout = (props: PropsWithChildren<Props>) => {
                 <IconButton   component="span"
                 onClick ={e=> {
                     e.preventDefault();
-                    navigate('/app/home/Patients')
+                    navigate(APP_PATIENTS)
                 }}
                 >
           <ArrowBackIosIcon  style={{ color:'white' }} fontSize="small"/>
@@ -49,8 +50,7 @@ const AjouterPatientLayout = (props: PropsWithChildren<Props>) => {
             <section className={styles.contentArea}>
 
                 <div className={styles.contentHeader}>
-                <Typography style={{
-                    color  : 'var(--light-blue)',
+                <Typography color="primary" style={{
                     marginBottom : "20px"
                     
                 }} variant="h6" gutterBottom>
