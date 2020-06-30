@@ -3,7 +3,7 @@ import { Container, createStyles, makeStyles, Paper, Theme, Typography } from '@
 
 import Button from '../../components/Button'
 import { navigate } from 'gatsby';
-import { APP_PATIENTS } from '../routes';
+import { APP_PATIENTS, APP_DASHBOARD } from '../routes';
 
 interface Props {
     path: string
@@ -50,7 +50,7 @@ export default function Main({ }: Props): ReactElement {
                 <Paper className={classes.paper}>
                     <Typography variant="h4" className={classes.typography} color="primary">Dashboard</Typography>
                     <img src={require('../../../images/chart.jpeg')} width="100%"></img>
-                    <Button  text="Go to dashboard"/>
+                    <Button  text="Go to dashboard" onClick={e => navigate(APP_DASHBOARD)}/>
                 </Paper>
                 <Paper className={classes.paper}>
                     <Typography variant="h4" className={classes.typography} color="primary">Patients</Typography>
