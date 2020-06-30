@@ -41,6 +41,19 @@ const useStyles = makeStyles(theme => ({
 const sexes = [{ value: "Masculin", label: "Masculin" }, { value: "Feminin", label: "Feminin" }];
 const wilayas = [{ value: "Alger", label: "Alger" }, { value: "Blida", label: "Blida" }];
 const communes = [{ value: "Alger", label: "Alger" }, { value: "Alger", label: "Alger" }];
+const etats = [
+    { value: "Bon", label: "Bon" },
+    
+    { value: "Urgent", label: "Urgent" },
+    {
+        value : "Critique",
+        label : "Critique"
+    },
+    {
+        value :"Normal",
+        label : "Normal"
+    }
+]
 //#############################################################
 interface Props {
     path: string;
@@ -57,6 +70,12 @@ const AjoutPatients = (props: Props) => {
             ...currentPatient,
             id : currentPatient.uid,
         })
+        if(currentPatient.categorie === "Pandemie") {
+            setState({
+                checkedA : true
+            })
+        }
+        console.log(values)
     },[])
     const onSubmit = e => {
 
@@ -64,12 +83,10 @@ const AjoutPatients = (props: Props) => {
         dispatch({
             type: UPDATE_PATIENT,
             payload: {
+                ...values,
                 fullName: values.prenom.trim() + " " + values.nom.trim(),
-                phone: values.numeroTelephone,
-                categorie: values.typeMaladie,
                 age: values.age,
-                etat: "Urgent",
-                date_insc: (new Date()).toUTCString(),
+                categorie : (state.checkedA) ? "Pandemie" : values.categorie,
             }
         })
         setModal(true)
@@ -87,12 +104,11 @@ const AjoutPatients = (props: Props) => {
 
     /*values contains the inputs (patient's data )*/
     const [values, setValues] = React.useState({
-        id : "",
         nom: "",
         prenom: "",
         address: "",
         codeP: "",
-        numeroTelephone: "",
+        phone: "",
         adresseEmail: "",
         nomPrenomPersonne: "",
         addressPersonne: "",
@@ -101,10 +117,10 @@ const AjoutPatients = (props: Props) => {
         wilaya: "Alger",
         commune: "Alger",
         age: "18",
-        typeMaladie: "",
+        categorie: "",
         nomMaladie: "",
         descriptionMaladie: "",
-
+        etat : ""
     });
 
     /*handling textfields changes*/
@@ -274,16 +290,15 @@ const AjoutPatients = (props: Props) => {
                             <div style={{ marginLeft: 40, marginTop: 8 }}>
                                 <TextField
                                     required
-                                    id="numeroTelephone"
+                                    id="phone"
                                     label="Numéro de Téléphone"
                                     defaultValue=""
-                                    value={values.numeroTelephone}
+                                    value={values.phone}
                                     type="phone"
                                     variant="outlined"
-                                    autoComplete
                                     style={{ margin: 16, width: '335px', }}
                                     size="small"
-                                    onChange={handleChangeForm("numeroTelephone")}
+                                    onChange={handleChangeForm("phone")}
                                 />
 
                                 <TextField
@@ -383,14 +398,14 @@ const AjoutPatients = (props: Props) => {
                                 <div style={{ marginLeft: 40, marginTop: 8 }}>
                                     <TextField
                                         required
-                                        id="typeMaladie"
+                                        id="categorie"
                                         label="Type de maladie"
                                         defaultValue=""
-                                        value={values.typeMaladie}
+                                        value={values.categorie}
                                         variant="outlined"
                                         style={{ margin: 16, width: '335px', }}
                                         size="small"
-                                        onChange={handleChangeForm("typeMaladie")}
+                                        onChange={handleChangeForm("categorie")}
                                     />
                                     <TextField
                                         required
@@ -404,6 +419,22 @@ const AjoutPatients = (props: Props) => {
                                         size="small"
                                         onChange={handleChangeForm("nomMaladie")}
                                     />
+                                             <TextField
+                                    id="etat"
+                                    select
+                                    label="Etat Patient"
+                                    value={values.etat}
+                                    onChange={handleChangeForm("etat")}
+                                    variant="outlined"
+                                    style={{ margin: 16, width: '237.5px' }}
+                                    size="small"
+                                >
+                                    {etats.map(option => (
+                                        <MenuItem key={option.value} value={option.value}>
+                                            {option.label}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
                                 </div>
                             </div>
                             <div style={{ marginLeft: 40 }}>

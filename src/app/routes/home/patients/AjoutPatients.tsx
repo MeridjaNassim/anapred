@@ -37,6 +37,19 @@ const useStyles = makeStyles(theme => ({
 
 /* lists of droplist content*/
 const sexes = [{ value: "Masculin", label: "Masculin" }, { value: "Feminin", label: "Feminin" }];
+const etats = [
+    { value: "Bon", label: "Bon" },
+    
+    { value: "Urgent", label: "Urgent" },
+    {
+        value : "Critique",
+        label : "Critique"
+    },
+    {
+        value :"Normal",
+        label : "Normal"
+    }
+];
 const wilayas = [{ value: "Alger", label: "Alger" }, { value: "Blida", label: "Blida" }];
 const communes = [{ value: "Alger", label: "Alger" }, { value: "Alger", label: "Alger" }];
 //#############################################################
@@ -50,23 +63,20 @@ const AjoutPatients = (props: Props) => {
     const { dispatch } = useContext(PatientContext)
     /* on submit form function*/
     const onSubmit = e => {
-
-        console.log(values)
+        e.preventDefault()
         dispatch({
             type: ADD_PATIENT,
             payload: {
                 ...values,
                 fullName: values.prenom.trim() + " " + values.nom.trim(),
-                phone: values.numeroTelephone,
-                categorie: values.typeMaladie,
                 age: values.age,
-                etat: "Urgent",
+                categorie : (state.checkedA) ? "Pandemie" : values.categorie,
                 date_insc: (new Date()).toUTCString(),
             }
         })
         setModal(true)
         /* here the connection with the data base*/
-        e.preventDefault()
+        
         /* firebase
            .firestore()
            .collection("items")
@@ -83,7 +93,7 @@ const AjoutPatients = (props: Props) => {
         prenom: "",
         address: "",
         codeP: "",
-        numeroTelephone: "",
+        phone: "",
         adresseEmail: "",
         nomPrenomPersonne: "",
         addressPersonne: "",
@@ -92,9 +102,10 @@ const AjoutPatients = (props: Props) => {
         wilaya: "Alger",
         commune: "Alger",
         age: "18",
-        typeMaladie: "",
+        categorie: "",
         nomMaladie: "",
         descriptionMaladie: "",
+        etat : ""
 
     });
 
@@ -106,10 +117,10 @@ const AjoutPatients = (props: Props) => {
 
     /*Switch handling*/
     const [state, setState] = React.useState({
-        checkedA: true,
+        checkedA: false,
     });
 
-    const [modal ,setModal] =React.useState(false)
+    const [modal, setModal] = React.useState(false)
 
     const handleChange = (event) => {
         setState({ ...state, [event.target.name]: event.target.checked });
@@ -120,24 +131,24 @@ const AjoutPatients = (props: Props) => {
         <form onSubmit={onSubmit} autoComplete="off" >
             <div>
                 <AjouterPatientLayout title="Ajouter patient" text="Informations relatif au patient">
-                    <Modal open={modal} handleClose={()=> setModal(false)}>
+                    <Modal open={modal} handleClose={() => setModal(false)}>
                         <Typography color="primary" style={{
-                                marginBottom: "100px"
-                                ,
-                                textAlign :"center"
-                            }} variant="h6" gutterBottom>
-                                Patient ajouté
+                            marginBottom: "100px"
+                            ,
+                            textAlign: "center"
+                        }} variant="h6" gutterBottom>
+                            Patient ajouté
                         </Typography>
                         <Button text="Fermer"
-                                onClick={e => {
-                                    e.preventDefault();
-                                    setModal(false)
-                                }}
-                                style={{
-                                    alignSelf : "center",
-                                    color: "var(--red)",
-                                    borderColor: "var(--red)"
-                                }} size="medium" />
+                            onClick={e => {
+                                e.preventDefault();
+                                setModal(false)
+                            }}
+                            style={{
+                                alignSelf: "center",
+                                color: "var(--red)",
+                                borderColor: "var(--red)"
+                            }} size="medium" />
                     </Modal>
                     <div style={{ width: '66%', margin: 'auto' }} >
 
@@ -265,23 +276,21 @@ const AjoutPatients = (props: Props) => {
                             <div style={{ marginLeft: 40, marginTop: 8 }}>
                                 <TextField
                                     required
-                                    id="numeroTelephone"
+                                    id="phone"
                                     label="Numéro de Téléphone"
                                     defaultValue=""
-                                    value={values.numeroTelephone}
+                                    value={values.phone}
                                     type="phone"
                                     variant="outlined"
-                                    autoComplete
                                     style={{ margin: 16, width: '335px', }}
                                     size="small"
-                                    onChange={handleChangeForm("numeroTelephone")}
+                                    onChange={handleChangeForm("phone")}
                                 />
 
                                 <TextField
                                     required
                                     id="adresseEmail"
                                     label="Adresse Email"
-                                    defaultValue=""
                                     value={values.adresseEmail}
                                     type="email"
                                     variant="outlined"
@@ -374,14 +383,14 @@ const AjoutPatients = (props: Props) => {
                                 <div style={{ marginLeft: 40, marginTop: 8 }}>
                                     <TextField
                                         required
-                                        id="typeMaladie"
+                                        id="categorie"
                                         label="Type de maladie"
                                         defaultValue=""
-                                        value={values.typeMaladie}
+                                        value={values.categorie}
                                         variant="outlined"
                                         style={{ margin: 16, width: '335px', }}
                                         size="small"
-                                        onChange={handleChangeForm("typeMaladie")}
+                                        onChange={handleChangeForm("categorie")}
                                     />
                                     <TextField
                                         required
@@ -395,6 +404,22 @@ const AjoutPatients = (props: Props) => {
                                         size="small"
                                         onChange={handleChangeForm("nomMaladie")}
                                     />
+                                      <TextField
+                                    id="etat_patient"
+                                    select
+                                    label="Etat Patient"
+                                    value={values.etat}
+                                    onChange={handleChangeForm("etat")}
+                                    variant="outlined"
+                                    style={{ margin: 16, width: '237.5px' }}
+                                    size="small"
+                                >
+                                    {etats.map(option => (
+                                        <MenuItem key={option.value} value={option.value}>
+                                            {option.label}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
                                 </div>
                             </div>
                             <div style={{ marginLeft: 40 }}>
