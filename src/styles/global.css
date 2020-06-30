@@ -1,5 +1,8 @@
 @import './reset.css';
 
+*{
+    font-family: var(--font);
+}
 a {
     text-decoration: none;
 

@@ -6,6 +6,7 @@ import Paper from '@material-ui/core/Paper';
 import Fade from '@material-ui/core/Fade/Fade'
 import Modal from '../../../components/Modal'
 import Popper from '@material-ui/core/Popper';
+import InfoIcon from '@material-ui/icons/Info';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Button from '../../../components/Button'
 import { IconButton, Typography, ListItem, ListItemIcon, ListItemText ,List} from '@material-ui/core';
@@ -18,7 +19,7 @@ import DownloadIcon from '@material-ui/icons/CloudDownload'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { navigate } from 'gatsby';
 import { all_patient_columns } from '../../../utils/TableColumns';
-import { EDIT_PATIENT } from '../../routes';
+import { EDIT_PATIENT, DISPLAY_PATIENT } from '../../routes';
 import { GET_ONE, DELETE_PATIENT, ARCHIVE_PATIENT, DOWNLOAD_PATIENT } from '../../../state/patients/actions';
 
 interface Props {
@@ -179,6 +180,22 @@ const Options: React.FC<OptionsProps> = ({ patient}) => {
                         <div className={optionClasses.root}>
                             <Typography className={classes.typography} variant="caption">Patient : {patient.uid}</Typography>
                             <List component="nav" aria-label="main mailbox folders">
+                            <ListItem button onClick={e => {
+                                    /// set Edit Patient
+                                    dispatch({
+                                        type : GET_ONE,
+                                        payload : {
+                                            uid : patient.uid
+                                        }
+                                    })
+                                    navigate(DISPLAY_PATIENT)
+
+                                }}>
+                                    <ListItemIcon>
+                                        <InfoIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Afficher le patient" />
+                                </ListItem>
                                 <ListItem button onClick={e => {
                                     /// set Edit Patient
                                     dispatch({

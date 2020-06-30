@@ -89,7 +89,7 @@ const PatientsLayout = (props: PropsWithChildren<Props>) => {
                     <Route id="Archive" title="Archive" isActive={isActive} onClick={handleClickOnRoute}></Route>
                 </ul>
             </nav>
-            <section className={styles.contentArea}>
+            <section className={`${styles.contentArea} ${styles.paper}`}>
 
                 <div className={styles.contentHeader}>
                     <Typography style={{

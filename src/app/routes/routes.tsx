@@ -13,7 +13,8 @@ export const routes = {
                 routes : {
                     info : '/',
                     ajout : '/ajout',
-                    edit : '/edit'
+                    edit : '/edit',
+                    patient :"/patient"
                 }
             },
             interventions : "/Inteventions",
@@ -37,3 +38,4 @@ export const APP_DOCS = "/docs";
 
 export const AJOUT_PATIENT = APP_PATIENTS+routes.home.routes.patients.routes.ajout
 export const EDIT_PATIENT = APP_PATIENTS+routes.home.routes.patients.routes.edit
+export const DISPLAY_PATIENT = APP_PATIENTS+routes.home.routes.patients.routes.patient

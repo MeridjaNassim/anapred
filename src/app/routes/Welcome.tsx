@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    fontFamily : "var(--font)"
   },
   avatar: {
     margin: theme.spacing(1),
@@ -42,16 +43,14 @@ const useStyles = makeStyles((theme) => ({
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
+    fontFamily :"inherit"
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
   brand : {
-    position : 'absolute',
-    left : theme.spacing(5),
-    top : theme.spacing(3),
     fontFamily : 'var(--font-montserrat)',
-    fontWeight : 600
+    fontWeight : 800
   }
 }));
 
@@ -89,10 +88,11 @@ export default function Welcome({} : Props) {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <Typography component="h1" variant="h5" color="primary" className={classes.brand}>
-          ANAPRED
-        </Typography>
+      
       <div className={classes.paper}>
+      <Typography component="h1" variant="h5" color="primary" className={classes.brand}>
+           <span className={classes.brand} style={{color :"var(--light-blue)"}}>ANA</span>PRED
+        </Typography>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>

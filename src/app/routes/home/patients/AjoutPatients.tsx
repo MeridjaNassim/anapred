@@ -5,7 +5,7 @@ import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
 import styles from '../../../styles/patientLayout.module.css';
-import AjouterPatientLayout from "../../../components/layout/AjouterPatientLayout";
+import OperationLayout from "../../../components/layout/OperationLayout";
 import Typography from "@material-ui/core/Typography";
 import Switch from "@material-ui/core/Switch";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -15,6 +15,7 @@ import { APP_PATIENTS } from "../../routes";
 import PatientContext from "../../../state/patients/PatientContext";
 import { ADD_PATIENT } from "../../../state/patients/actions";
 import Modal from "../../../components/Modal";
+import { useFirebaseAuthState } from "../../../hooks/auth.hook";
 
 
 
@@ -72,6 +73,19 @@ const AjoutPatients = (props: Props) => {
                 age: values.age,
                 categorie : (state.checkedA) ? "Pandemie" : values.categorie,
                 date_insc: (new Date()).toUTCString(),
+                interventions : [
+                    {
+                        doctor : {
+                            uid : user.uid,
+                            photoUrl : user.photoURL,
+                            email : user.email,
+                            displayName : user.displayName
+                        },
+                        categorie : values.categorie,
+                        description : values.descriptionMaladie,
+                        nomMaladie : values.nomMaladie
+                    }
+                ]
             }
         })
         setModal(true)
@@ -119,7 +133,7 @@ const AjoutPatients = (props: Props) => {
     const [state, setState] = React.useState({
         checkedA: false,
     });
-
+    const [user] = useFirebaseAuthState()
     const [modal, setModal] = React.useState(false)
 
     const handleChange = (event) => {
@@ -130,7 +144,7 @@ const AjoutPatients = (props: Props) => {
     return (
         <form onSubmit={onSubmit} autoComplete="off" >
             <div>
-                <AjouterPatientLayout title="Ajouter patient" text="Informations relatif au patient">
+                <OperationLayout title="Ajouter patient" text="Informations relatif au patient" paper={true}>
                     <Modal open={modal} handleClose={() => setModal(false)}>
                         <Typography color="primary" style={{
                             marginBottom: "100px"
@@ -347,7 +361,7 @@ const AjoutPatients = (props: Props) => {
                         </div>
                         <br></br><br></br>
                     </div>
-                </AjouterPatientLayout>
+                </OperationLayout>
                 <div className={styles.layout}>
                     <section className={styles.contentArea}>
                         <div style={{

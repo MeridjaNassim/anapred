@@ -9,7 +9,9 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { navigate } from 'gatsby';
 import { APP_PATIENTS } from '../../routes/routes';
 interface Props {
-
+    text : string,
+    title : string,
+    paper?:boolean
 }
 
 
@@ -21,7 +23,7 @@ const Route = ({id , title , isActive , onClick})=> {
 }
 
 
-const AjouterPatientLayout = (props: PropsWithChildren<Props>) => {
+const OperationLayout = ({text,title,paper =true,children}: PropsWithChildren<Props>) => {
     const [activeRoute, setActiveRoute] = useState("Tout");
     const isActive = (id : string )=> {
         return true
@@ -43,7 +45,7 @@ const AjouterPatientLayout = (props: PropsWithChildren<Props>) => {
           <ArrowBackIosIcon  style={{ color:'white' }} fontSize="small"/>
         </IconButton>
                
-                    <Route id="AjouterPatient" title={props.title} isActive={isActive} onClick={handleClickOnRoute}></Route>
+                    <Route id="AjouterPatient" title={title} isActive={isActive} onClick={handleClickOnRoute}></Route>
                    
                 </ul>
             </nav>
@@ -54,15 +56,15 @@ const AjouterPatientLayout = (props: PropsWithChildren<Props>) => {
                     marginBottom : "20px"
                     
                 }} variant="h6" gutterBottom>
-                    {props.text}
+                    {text}
                 </Typography>
               
                 </div>
                 
-                {props.children}
+                {children}
             </section>
         </div>
     )
 }
 
-export default AjouterPatientLayout
+export default OperationLayout

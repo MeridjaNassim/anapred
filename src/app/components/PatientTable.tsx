@@ -79,7 +79,7 @@ export default function StickyHeadTable({style,paginationStyle,columns,data} : T
           <TableBody>
             {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
               return (
-                <TableRow hover role="checkbox" tabIndex={-1} key={row.uid}>
+                <TableRow hover role="checkbox" tabIndex={-1} key={row.uid} >
                   {columns.map((column) => {
                     const value = row[column.id];
                     return (

@@ -5,7 +5,7 @@ import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
 import styles from '../../../styles/patientLayout.module.css';
-import AjouterPatientLayout from "../../../components/layout/AjouterPatientLayout";
+import OperationLayout from "../../../components/layout/OperationLayout";
 import Typography from "@material-ui/core/Typography";
 import Switch from "@material-ui/core/Switch";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -144,7 +144,7 @@ const AjoutPatients = (props: Props) => {
     return (
         <form onSubmit={onSubmit} autoComplete="off" >
             <div>
-                <AjouterPatientLayout title="Modifier patient" text={`Modifier le patient ${values.id}`}>
+                <OperationLayout title="Modifier patient" text={`Modifier le patient ${values.id}`} paper={true}>
                     <Modal open={modal} handleClose={()=> setModal(false)}>
                         <Typography color="primary" style={{
                                 marginBottom: "100px"
@@ -362,7 +362,7 @@ const AjoutPatients = (props: Props) => {
                         </div>
                         <br></br><br></br>
                     </div>
-                </AjouterPatientLayout>
+                </OperationLayout>
                 <div className={styles.layout}>
                     <section className={styles.contentArea}>
                         <div style={{

@@ -58,58 +58,6 @@ export const useMockPatientRawData =  ()=> {
             }
         },
         {
-            uid : "In352HDOEUsOhdtrIzqg",
-            data : {
-                fullName :"Meridja Nassim",
-                phone :"0672439370",
-                etat : "Bon" ,
-                age :20,
-                categorie : "Gripe",
-                date_insc : {
-                    seconds : 1500000
-                }
-            }
-        },
-        {
-            uid : "Fn352HDOEUsOhdtrIzqg",
-            data : {
-                fullName :"Abdallah Farouk",
-                phone :"0672439370",
-                etat : "Urgent" ,
-                age :20,
-                categorie : "Fracture",
-                date_insc : {
-                    seconds : 1500000
-                }
-            }
-        },
-        {
-            uid : "In352FDOEUsOhdtrIzqg",
-            data : {
-                fullName :"Bennecer Zaki",
-                phone :"0672439370",
-                etat : "Bon" ,
-                age :21,
-                categorie : "Allergie",
-                date_insc : {
-                    seconds : 1500000
-                }
-            }
-        },
-        {
-            uid : "In352FDOEUsOhdtrIzqa",
-            data : {
-                fullName :"Zegour Abdelkader",
-                phone :"XXXXXXXX",
-                etat : "Urgent" ,
-                age :100,
-                categorie : "Pandemie",
-                date_insc : {
-                    seconds : 1500000
-                }
-            }
-        },
-        {
             uid : "In352HDOEUsQhdtrIzqg",
             data : {
                 fullName :"Meridja Nassim",
@@ -121,32 +69,6 @@ export const useMockPatientRawData =  ()=> {
                     seconds : 1500000
                 }
             }
-        },
-        {
-            uid : "In352HDOEFAFhdtrIzqg",
-            data : {
-                fullName :"Meridja Nassim",
-                phone :"0672439370",
-                etat : "Bon" ,
-                age :20,
-                categorie : "Gripe",
-                date_insc : {
-                    seconds : 1500000
-                }
-            }
-        },
-        {
-            uid : "In3522FFAUsOhdtrIzqg",
-            data : {
-                fullName :"Meridja Nassim",
-                phone :"0672439370",
-                etat : "Bon" ,
-                age :20,
-                categorie : "Gripe",
-                date_insc : {
-                    seconds : 1500000
-                }
-            }
-        },
+        }
     ], loading : false , error : null}
 }

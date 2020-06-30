@@ -27,6 +27,9 @@ export const wrapRootElement = ({ element }) => {
         main: "#272c34",
       },
     },
+    typography : {
+      fontFamily :'var(--font)'
+    }
   })
   theme = responsiveFontSizes(theme)
   return (
